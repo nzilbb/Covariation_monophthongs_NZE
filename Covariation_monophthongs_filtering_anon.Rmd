@@ -1,0 +1,700 @@
+---
+title: "Systematic co-variation of monophthongs across speakers of New Zealand English"
+subtitle: "Supplementary materials: _Data processing_"
+author: "James Brand, Jen Hay, Lynn Clark, Kevin Watson & Márton Sóskuthy<br/><br/>Corresponding author: James Brand<br/>Email: james.brand@canterbury.ac.nz<br/>Website: https://jamesbrandscience.github.io"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    collapsed: false
+    df_print: paged
+    code_folding: show
+---
+
+<style>
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #95A044;
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, cache = TRUE)
+
+```
+
+# Document outline
+
+**Purpose: Introduce the data and libraries used**
+
+This document provides the code used during the data processing stages of the Brand, Hay, Clark, Watson and Sóskuthy (2020) manuscript, submitted to the Journal of Phonetics. It contains all the steps the authors carried out in order to produce the final data set used in the analysis (see supplementary materials: Analysis file).
+
+### Data decription
+
+  - The raw data file being processed contains data from the ONZE corpus using LaBB-CAT ([Fromont & Hay, 2008](https://doi.org/10.3366/E1749503208000142))
+  
+  - The data were processed automatically with Praat and were force-aligned using the HTK toolkit
+  
+  - The ONZE corpus comprises 4 sub-corpora: _Mobile Unit_ (MU), _Intermediate Archive_ (IA), _Darfield_ (Darfield), _Canterbury Corpus_ (CC). You can find out more on the ONZE corpus at [https://www.canterbury.ac.nz/nzilbb/research/onze/](https://www.canterbury.ac.nz/nzilbb/research/onze/)
+  
+  - All available speakers were queried and all available tokens containing the following vowel segments were extracted (DRESS, FLEECE, FOOT, GOOSE, KIT, LOT, NURSE, SCHWA, START, STRUT, THOUGHT, TRAP)
+  
+  - The resulting raw unprocessed dataset is `ONZE_raw.rds`, the only processing this file has undergone is converting the original `.csv` file outputted from labb-cat to `.rds` format, in order to reduce this size of the file.
+  
+  - We do not include the raw data file in the project repository as it contains sensitive information about the speakers that we do not wish to make publicly available. If you are interested in accessing or using the ONZE instance of labb-cat, please contact **nzilbb [at] canterbury [dot] ac [dot] nz**
+  
+  - The data file that this document produces (`ONZE_vowels_filtered_anon.rds`) is made available in the project repository. This contains anonymised data and all the relevant variables that are required to reproduce the main analyses reported in the paper
+  
+  - We hope that this document provides a transparent and clear means to understand each of the steps taken to obtain the final data set
+
+###Libraries
+
+First, we will load in the relevant R libraries required to run the processing procedures and then load in the data itself.
+
+In order for the code in this document to work, the libraries are required to be installed and loaded into your R session. If you do not have any of the libraries installed, you can run `install.packages("LIBRARY NAME")` (change "LIBRARY NAME" to the required library name, e.g. `install.packages("tidyverse")`) which should resolve any warning messages you might get.
+
+```{r message=FALSE}
+#load in the libraries
+library(tidyverse) #various functions
+library(tidylog) #gives summaries
+library(ggforce) #plotting functions
+library(cowplot) #plotting functions
+
+#this is important for the anonymisation of the variables
+set.seed(123)
+
+#check information about R session, this will give details of the R setup on the authors computer
+sessionInfo()
+
+```
+
+```{r}
+#load in the data
+vowels_all_raw <- readRDS("Filtering_data/ONZE_raw.rds")
+
+```
+
+# Initial tidying
+
+**Purpose: Make the data easier to use**
+
+Several initial tidying steps are applied to the raw data for ease of use, see the comments (sentences preceeded by a `#`) for information about what the code is doing. There is no direct modification of the actual data at this stage, but new variables are created and some variables that are not required are removed.
+
+```{r}
+vowels_all <- vowels_all_raw %>%
+  
+  #rename the variables
+  rename(TokenNum = Number,
+         Gender = participant_gender,
+         PrevWord = `Before Match`,
+         FollWord = `After Match`,
+         Word = `Target orthography`,
+         WordSegments = `Match segments`,
+         VowelDISC = `Target segments`,
+         VowelStart = `Target segments start`,
+         VowelEnd = `Target segments end`,
+         VowelMid = time_0.5,
+         F1_50 = `F1-time_0.5`,
+         F2_50 = `F2-time_0.5`,
+         F3_50 = `F3-time_0.5`) %>%
+  
+  #create a Well's lexical set variable
+  mutate(Vowel = fct_recode(factor(VowelDISC),
+                            FLEECE = "i",
+                            KIT = "I",
+                            DRESS = "E",
+                            TRAP = "{",
+                            SCHWA = "@",
+                            START = "#",
+                            LOT = "Q",
+                            THOUGHT = "$",
+                            NURSE = "3",
+                            STRUT = "V",
+                            FOOT = "U",
+                            GOOSE = "u"),
+         
+         #recode any gender values read in as FALSE as female
+         Gender = fct_recode(factor(Gender), "F" = "FALSE"),
+         
+         #create a vowel duration variable
+         VowelDur = VowelEnd - VowelStart,
+         
+         #create an orthographic length variable
+         orthographic_length = str_length(Word),
+         
+         #create a phonological length variable
+         phonological_length = str_length(WordSegments)
+         
+         ) %>%
+  
+  #anonymise the speaker and word variables
+  mutate(Speaker_anon = ifelse(is.na(Speaker), Speaker, paste0(Corpus, "_", tolower(Gender), "_", fct_anon(factor(Speaker)))),
+         Word_anon = ifelse(is.na(Word), Word, paste0("word_", fct_anon(factor(Word))))) %>%
+  
+  #change all factors to characters
+  mutate_if(sapply(., is.factor), as.character)
+
+#anonymise the transcript variable
+anonymised <- vowels_all %>%
+  select(Speaker, Speaker_anon, Transcript) %>%
+  distinct() %>%
+  mutate(Speaker1 = str_replace(string = Speaker, pattern = " ", replacement = ""),
+         Transcript_anon = str_replace(string = Transcript, pattern = Speaker1, replacement = Speaker_anon)) %>%
+  select(-Speaker1)
+
+#keep only the variables which are informative and drop ones that are not
+vowels_all <- vowels_all %>%
+  left_join(., anonymised) %>%
+  select(TokenNum, Speaker, Speaker_anon, Transcript, Transcript_anon, Corpus, Gender, participant_year_of_birth, Line, LineEnd, MatchId, TargetId, URL, PrevWord, Text, FollWord, Word, Word_anon, WordSegments, Vowel, VowelDISC, F1_50, F2_50, VowelStart, VowelMid, VowelEnd, VowelDur, Error, orthographic_length, phonological_length)
+
+```
+
+# Data filtering
+
+**Purpose: filter out unsuitable data**
+
+### Various error removal
+
+As the raw data file contains various data points that are not suitable for our final analysis, we will filter them out from the dataset. The following steps are taken:
+
+- Remove speakers with missing gender or year of birth information (this is required for modelling)
+
+- Remove transcripts that are word lists (the data should be interview speech only)
+
+- Remove tokens where Praat was not able to extract F1/F2 (these are non-numeric values)
+
+- Remove tokens where F1 is > 1000 (these are likely errors)
+
+- Remove tokens with vowel durations <= 0.01 or >= 3 (these are likely errors)
+
+- Remove tokens with a phonological length > 25 (these are likely errors)
+
+- Remove tokens with a hesitation (these will affect the production of the vowel)
+
+- Remove tokens where the word is not transcribed
+
+- Remove tokens from a list of stopwords (these are high frequency grammatical words that may not be representative of a speakers vocalic productions)
+
+```{r warning=FALSE}
+#create a list of stopwords
+stopWords <- c('a', 'ah', 'ahh', 'am', "an'", 'an', 'and', 'are', "aren't", 'as', 'at', 'aw', 'because', 'but', 'could', 'do', "don't", 'eh', 'for', 'from', 'gonna', 'had', 'has', 'have', 'he', "he's", 'her', 'high', 'him', 'huh', 'I', "I'll", "I'm", "I've", "I'd", 'in', 'into', 'is', 'it', "it's", 'its', 'just', 'mean', 'my', 'nah', 'not', 'of', 'oh', 'on', 'or', 'our', 'says', 'she', "she's", 'should', 'so', 'than', 'that', "that's", 'the', 'them', 'there', "there's", 'they', 'this', 'to', 'uh', 'um', 'up', 'was', "wasn't", 'we', 'were', 'what', 'when', 'which', 'who', 'with', 'would', 'yeah', 'you', "you've")
+
+#apply the filtering
+vowels_all <- vowels_all %>%
+  
+  filter(
+    #filter missing gender and participant year of birth
+    !is.na(Gender),
+    !is.na(participant_year_of_birth)) %>%
+  
+  filter(
+    #filter word lists
+    !grepl("-WL", Transcript_anon),
+    !Transcript_anon %in% c("CC_f_450-08.trs", "CC_f_546-12.trs", "CC_m_032-10.trs", "CC_m_059-08.trs",
+                            "CC_m_204-11.trs", "CC_m_228-08.trs", "CC_m_340-06.trs", "CC_m_397-07.trs",
+                            "CC_m_427-02.trs", "CC_m_446-10.trs", "CC_m_565-09.trs")) %>%
+  
+  filter(  
+    #filter tokens with an error or missing F1/F2
+    is.na(Error) |
+      !is.na(F1_50) |
+      !is.na(F2_50),
+    
+    #filter tokens that have 4 or more characters, this indicates that they are i. an error term outputted from Praat or ii. greater than 1000hz for F1
+    str_length(F1_50) < 4) %>%
+
+  filter(
+    
+    #filter tokens with a very long phonological length
+    phonological_length < 25,
+  
+    #filter tokens with hesitations
+    !grepl("~", Word),
+  
+    #filter tokens which do not have the word transcribed
+    !is.na(Word)) %>%
+  
+  filter(  
+    #filter tokens with very short or long vowel durations
+    VowelDur >= 0.01,
+    VowelDur <= 3) %>%
+
+  filter(    
+    #filter stopwords
+    !Word %in% stopWords
+    
+  ) %>%
+  
+  #ensure the F1/F2 variables are numeric as any error strings are now removed
+  mutate(F1_50 = as.numeric(as.character(F1_50)),
+         F2_50 = as.numeric(as.character(F2_50)))
+
+```
+
+### Speech rate and stress
+
+**Purpose: add speech rate and stress coding, filtering out unstressed tokens**
+
+As the original dataset did not have information for speaker's speech rate on each transcript or the stress coding of the tokens, we have to add this information to the dataset. Additionally, as unstressed tokens are produced differently to stressed tokens, we chose to remove all SCHWA and unstressed tokens from the dataset. There is additional data loss as some of the tokens do not have stress coded, when this is the case, they are also removed.
+
+Speech rate (calculated per speaker per transcript in syllable/second):
+
+```{r}
+#load in the speech rate data and modify the variable names
+vowels_all_time_sr <- readRDS("Filtering_data/ONZE_speech_rates.rds") %>%
+  
+  #filter tokens without speech rate information or the transcript is not present in the dataset
+  filter(!is.na(Speech_rate),
+         Transcript %in% vowels_all$Transcript)
+
+#add the speech rate variable to the dataset
+vowels_all <- vowels_all %>%
+  left_join(., vowels_all_time_sr)
+
+```
+
+Stress:
+
+```{r}
+#load in the stress data
+vowels_stress <- readRDS("Filtering_data/ONZE_stress.rds")
+
+#remove SCHWA tokens
+vowels_all2 <- vowels_all %>%
+  filter(Vowel != "SCHWA") %>%
+  left_join(., vowels_stress)
+
+#create list of words with stress coding
+vowels_all_present_stress <- vowels_all2 %>%
+  filter(!is.na(`Target stress`),
+         `Target stress` != "0") %>%
+  select(WordSegments, `Target segments`, `Target stress`) %>%
+  distinct()
+
+#create list of words missing stress coding
+vowels_all_missing_stress <- vowels_all2 %>%
+  filter(is.na(`Target stress`),
+         `Match segments` %in% vowels_all_present_stress$WordSegments) %>%
+  mutate(`Target stress` = "stress")
+
+#add in tokens with stress
+vowels_all <- vowels_all2 %>%
+  filter(!is.na(`Target stress`),
+         `Target stress` != "0") %>%
+  rbind(vowels_all_missing_stress)
+
+#clean up the data
+vowels_all <- vowels_all %>%
+  select(TokenNum:Speech_rate, `Target stress`)
+
+nrow(vowels_all)
+
+```
+
+### Token Outlier removal
+
+**Purpose: filter out outliers**
+
+As the data has been force aligned and not undergone hand correction of the F1/F2 values, we will implement an outlier removal step so that values that are likely to be errors are filtered from the dataset. The way we do this is:
+
+- Calculate the mean and standard deviation for F1 and F2, per vowel and per speaker
+
+- Calculate a min and max threshold for F1 and F2 values, based on the mean + or - 2.5 standard deviations
+
+- Determine if a token is smaller or larger than the threshold, in which case it is classified as an outlier and it is removed from the dataset
+
+
+```{r}
+#outlier removal
+sd_limit = 2.5
+
+#calculate the summary statistics required for the outlier removal
+vowels_all_summary <- vowels_all %>%
+  group_by(Speaker, Vowel) %>%
+  summarise(n = n(),
+            mean_F1 = mean(F1_50, na.rm = TRUE),
+            mean_F2 = mean(F2_50, na.rm = TRUE),
+            sd_F1 = sd(F1_50, na.rm = TRUE),
+            sd_F2 = sd(F2_50, na.rm = TRUE),
+            max_F1 = mean(F1_50) + sd_limit*(sd(F1_50)),
+            min_F1 = mean(F1_50) - sd_limit*(sd(F1_50)),
+            max_F2 = mean(F2_50) + sd_limit*(sd(F2_50)),
+            min_F2 = mean(F2_50) - sd_limit*(sd(F2_50)))
+
+#store the outlier tokens data
+outlier_tokens <- vowels_all %>%
+  inner_join(., vowels_all_summary) %>%
+  mutate(outlier = ifelse(F1_50 > min_F1 &
+           F1_50 < max_F1 &
+           F2_50 > min_F2 &
+           F2_50 < max_F2, FALSE, TRUE)) %>%
+  group_by(Speaker, Vowel) %>%
+  filter(outlier == TRUE) %>%
+  ungroup() %>%
+  select(TokenNum:`Target stress`)
+
+#add the summary statistics and filter out outliers
+vowels_all <- vowels_all %>%
+  inner_join(., vowels_all_summary) %>%
+  mutate(outlier = ifelse(F1_50 > min_F1 &
+           F1_50 < max_F1 &
+           F2_50 > min_F2 &
+           F2_50 < max_F2, FALSE, TRUE)) %>%
+  group_by(Speaker, Vowel) %>%
+  filter(outlier == FALSE) %>%
+  ungroup() %>%
+  select(TokenNum:`Target stress`)
+```
+
+### Removal of FOOT tokens
+
+**purpose: remove all FOOT tokens as they have a relatively low token count**
+
+Inspecting the token counts per vowel highlights that there is considerably fewer FOOT tokens in the dataset compared to the other vowels, as we require speakers to have a large as possible inventory of tokens for all vowels, we decided to removed all FOOT tokens from the dataset in order to minimise the likelihood that some speakers would have a small token count. This option was preferred to removing individual speakers with low FOOT counts as it would have resulted in substantial data loss.
+
+A table with the token counts per vowel (at this stage of the processing) is provided below.
+
+```{r rows.print=12}
+#get token counts per vowel
+vowels_all %>%
+  group_by(Vowel) %>%
+  summarise(n = n()) %>%
+  arrange(n)
+
+#filter out FOOT tokens
+vowels_all <- vowels_all %>%
+  filter(Vowel != "FOOT")
+
+```
+
+### Speaker outlier removal
+
+**Purpose: filter out speakers who have low quality data**
+
+As there may be some speakers whose alignment is particularly poor (not simply because of a number of outlier tokens) we want to check the mean distance between each speakers vowels. This is achieved by calculating the mean euclidean distance between all the the vowels mean F1/F2 values. This is essentially raising the question: are there speakers in the dataset who have vowel spaces where the vowels are unnaturally overlapping, e.g. is it the case for any given speaker that the mean F1/F2 values for all their vowels are within a very small overlapping space. If we do find there are some speakers, this may indicate issues with their automatic alignment and thus, their F1/F2 values are dramatically unreliable.
+
+Note, that these speakers would not have had a reliable outlier removal implemented in the outlier removal step in the last section (i.e. removing tokens that were +/- 2.5 SDs from the mean, calculated per speaker, per vowel), as the mean value in these calculations for speakers with very small euclidean distances between their mean F1/F2 values would not have been reliable in the first instance.
+
+We then remove speakers who are -2 standard deviations from the mean euclidean distance, as these represent relatively overlapped vowel spaces and we define them to be outliers relative to the rest of the speakers. Doing this identifies **12 speakers**, who are subsequently removed from the dataset.
+
+To calculate the metric, we will do the following:
+
+  1. Calculate the mean F1/F2 values per speaker, per vowel
+  
+  2. Create a euclidean distance matrix based on the distances between each of the vowels, i.e. each speaker will have an 10x10 matrix based on the distance in F1/F2 space between each of the vowels, we would expect FLEECE and START to have a high distance, but STRUT and START to have a small distance
+  
+  3. For each speaker, take the mean of the distances per vowel, i.e. the column mean for each vowel in the distance matrix, this will give the average distance of a vowel in comparison to the others
+  
+  4. For each speaker, take the mean of all of the vowel distances, this will give the average distance between all vowels for a given speaker, if this value is small it means all vowels are very close to one another, if it is large it means that they are sparsely distributed
+  
+  5. We can now use these values to inspect the distribution of speakers distances, the resulting plot will have the mean euclidean distance value on the x axis and the kernel density estimate on the y axis (essentially a smoothed histogram), the solid horizontal line represents the mean, the dashed horizontal lines represent +/- 2 standard deviations from the mean
+  
+  6. Remove the speakers who are -2 standard deviations from the mean euclidean distance, this will filter out speakers with particularly overlapping vowel productions. We will keep the ones that +2 standard deviations as these are not indicative of measurement issues. The vowel spaces (with the mean euclidean distance and speaker name given in the facet label) of these speakers is plotted for reference
+  
+```{r}
+#calculate speaker means and sd
+speaker_means <- vowels_all %>% #use the vowels_all data
+  group_by(Speaker, Speaker_anon, Gender, Vowel) %>% #group based on per speaker, per vowel
+  summarise(n = n(),
+            F1_mean = mean(F1_50),
+            F2_mean = mean(F2_50),
+            F1_sd = sd(F1_50),
+            F2_sd = sd(F2_50)) #get the mean F1/F2
+
+#caluculate euclidean distances between vowel means
+speaker_distances <- speaker_means %>%
+  mutate(Dist = #calculate the euclidean distance matrix between the vowel means for each speaker
+           colMeans(as.matrix(dist(cbind(F1_mean, F2_mean))))) %>%
+  ungroup() %>% #ungroup the speakers and vowels
+  group_by(Speaker_anon) %>% #group by just speaker
+  summarise(mean_dist = mean(Dist), #calculate the mean distance across all of a speaker's vowels
+            sd_dist = sd(Dist)) %>% #calculate the sd too
+  mutate(Speaker_dist = paste(round(mean_dist, 2), Speaker_anon)) #create a new variable with the mean euclidean distance and the speaker name for plotting
+
+#plot the distibution
+ggplot(speaker_distances, aes(x = mean_dist)) + #plot the distribution
+  geom_density() +
+  geom_vline(xintercept = mean(speaker_distances$mean_dist), linetype = 1) +
+  geom_vline(xintercept = mean(speaker_distances$mean_dist) + 2*sd(speaker_distances$mean_dist), linetype = 2) +
+  geom_vline(xintercept = mean(speaker_distances$mean_dist) - 2*sd(speaker_distances$mean_dist), linetype = 2, colour = "red") +
+  theme_bw()
+
+#filter speakers who are -2 SDs from the mean euclidean distance
+outlier_speakers <- speaker_means %>%
+  inner_join(., speaker_distances) %>%
+  filter(mean_dist < mean(speaker_distances$mean_dist) - 2*sd(speaker_distances$mean_dist))
+
+#plot the outlier speakers vowel spaces
+outlier_speakers_plot <- vowels_all %>%
+  filter(Speaker_anon %in% outlier_speakers$Speaker_anon) %>%
+  inner_join(., outlier_speakers) %>%
+  arrange(mean_dist) %>%
+  ggplot(aes(x = F2_50, y = F1_50, colour = Vowel)) +
+  geom_point(size = 0.02, alpha = 0.5) +
+  stat_ellipse(level = 0.67) +
+  geom_text(data = outlier_speakers, aes(x = F2_mean, y =  F1_mean, label = Vowel), size = 2) +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+```{r echo=FALSE}
+outlier_speakers_plot + facet_wrap_paginate(~Speaker_dist, ncol = 3, nrow = 3, page = 1)
+outlier_speakers_plot + facet_wrap_paginate(~Speaker_dist, ncol = 3, nrow = 3, page = 2)
+```
+```{r}
+ #store the outlier speaker data
+ outlier_speakers_data <- vowels_all %>%
+  filter(Speaker_anon %in% outlier_speakers$Speaker_anon)
+ 
+ #filter out the speakers from the dataset
+ vowels_all <- vowels_all %>%
+  filter(!Speaker_anon %in% outlier_speakers$Speaker_anon)
+```
+
+Further inspection of the data reveals that there are considerably more speakers with vowel spaces that look like there are issues with the raw data. Thus, individual vowel plots and density distributions for F1/F2 were generated for each of the speakers in the dataset. These can be found in the `Speaker_vowel_plots` folder of the repository for all speakers in the data (referring to the data at this stage of the filtering process).
+
+Based on the inspection, we identified **76 further speakers** with vowel spaces that appeared to have substantially low quality data for F1/F2 values. These are plotted below for inspection.
+
+Additional exploration of these speakers suggests that there appears to be large variation in the F2 measurements, with values having substantially more spread than those speakers not identified as being low quality. This indicates that the outlier filtering of +/- 2.5 standard deviations to the raw data may not be sufficient in removing unreliable measurements. Alternatively, it could be explained by the visual nature of the inspection process, with the inspection being biased towards identifying speakers with more variable F2 across certain vowels.
+
+Whilst manually inspecting the vowel spaces and distributions may be not be an optimal solution to identifying speakers with low quality data, it does highlight underlying issues with automatic extraction of formant values. Furthermore, upon listening to the recordings of some of the low quality speakers, some of these issues can be explained simply by recording quality. Given that our dataset is substantially large (for sociophonetic research), we found that a compromise between automatic extraction and manual inspection resulted in a large enough dataset that was of sufficiently high quality for our analyses.
+
+<!-- ```{r eval=FALSE} -->
+<!-- #generate individual vowel plots for all speakers and density plots of the F1/F2 distubtions -->
+<!-- cat("Processing:\n") -->
+
+<!-- for (i in levels(factor(vowels_all$Speaker))) { -->
+
+<!-- cat(paste(i)) -->
+
+<!-- #density plot for F1 -->
+<!-- density_F1 <- vowels_all %>% -->
+<!--   dplyr::filter(Speaker == i) %>% -->
+<!--   pivot_longer(cols = F1_50:F2_50, names_to = "F1", values_to = "F_value") %>% -->
+<!--   dplyr::filter(F1 == "F1_50") %>% -->
+<!--   ggplot(aes(x = F_value, colour = factor(Vowel))) + -->
+<!--   geom_density() + -->
+<!--   facet_grid(F1~Vowel) + -->
+<!--   theme_bw() + -->
+<!--   theme(legend.position = "none", axis.text.x = element_text(size = 5)) -->
+
+<!-- #density plot for F2 -->
+<!-- density_F2 <- vowels_all %>% -->
+<!--   dplyr::filter(Speaker == i) %>% -->
+<!--   pivot_longer(cols = F1_50:F2_50, names_to = "F2", values_to = "F_value") %>% -->
+<!--   dplyr::filter(F2 == "F2_50") %>% -->
+<!--   ggplot(aes(x = F_value, colour = factor(Vowel))) + -->
+<!--   geom_density() + -->
+<!--   scale_x_reverse() + -->
+<!--   facet_grid(F2~Vowel) + -->
+<!--   theme_bw() + -->
+<!--   theme(legend.position = "none", axis.text.x = element_text(size = 5)) -->
+
+<!-- #vowel space plot   -->
+<!-- vowel_space <- vowels_all %>% -->
+<!--     dplyr::filter(Speaker == i) %>% -->
+<!--     ggplot(aes(x = F2_50, y = F1_50, colour = Vowel)) + -->
+<!--     geom_point(size = 0.05, alpha = 0.4) + -->
+<!--     stat_ellipse(level = 0.67) + -->
+<!--     geom_text(data = speaker_means %>% dplyr::filter(Speaker == i), aes(x = F2_mean, y = F1_mean, label = Vowel, colour = Vowel)) + -->
+<!--     scale_x_reverse() + -->
+<!--     scale_y_reverse() + -->
+<!--     facet_wrap(~Speaker, scales = "free") + -->
+<!--     theme_bw() + -->
+<!--     theme(legend.position = "none") -->
+
+<!--   density_plots <- plot_grid(density_F1, NULL, density_F2, NULL, nrow = 2, ncol = 2, rel_widths = c(5, 3)) -->
+<!--   combined_plot <- ggdraw(density_plots + draw_plot(vowel_space, x = 0.6, y = -0.1, scale = 0.8, width = 0.4, height = 1.2)) -->
+
+<!--   #save the file -->
+<!--   ggsave(filename = paste0("Speaker_vowel_plots/", i, "_plot.png"), plot = combined_plot, width = 12, height = 4, dpi = 300) -->
+<!-- cat(paste("✅")) -->
+<!-- } -->
+
+<!-- ``` -->
+
+```{r}
+#list of speakers with low quality vowel plots
+speakers_remove <- c(
+"CC_f_004", "CC_f_005", "CC_f_036", "CC_f_045", "CC_f_061", "CC_f_073", "CC_f_106", "CC_f_155", "CC_f_163", "CC_f_222", "CC_f_252", "CC_f_267", "CC_f_337", "CC_f_376", "CC_f_392", "CC_f_418", "CC_f_421", "CC_f_430", "CC_f_494", "CC_f_500", "CC_f_533", "CC_f_584", "CC_m_081", "CC_m_189", "CC_m_257", "CC_m_281", "CC_m_321", "CC_m_327", "CC_m_422", "CC_m_485", "CC_m_521", "CC_m_568", "CC_m_633", "Darfield_f_266", "Darfield_f_306", "Darfield_f_384", "Darfield_f_395", "Darfield_f_472", "Darfield_f_503", "Darfield_f_510", "Darfield_f_614", "Darfield_m_320", "Darfield_m_541", "Darfield_m_625", "IA_f_015", "IA_f_018", "IA_f_124", "IA_f_239", "IA_f_254", "IA_f_264", "IA_f_284", "IA_f_298", "IA_f_314", "IA_f_334", "IA_f_335", "IA_f_352", "IA_f_358", "IA_f_372", "IA_f_412", "IA_f_586", "IA_m_192", "IA_m_213", "IA_m_305", "IA_m_416", "IA_m_506", "IA_m_589", "MU_f_014", "MU_f_023", "MU_f_141", "MU_f_153", "MU_f_195", "MU_f_415", "MU_f_519", "MU_f_603", "MU_m_158", "MU_m_355"
+)
+
+#plot the outlier speakers vowel spaces
+low_quality_speakers_plot <- vowels_all %>%
+  filter(Speaker_anon %in% speakers_remove) %>%
+  inner_join(., speaker_means) %>%
+  ggplot(aes(x = F2_50, y = F1_50, colour = Vowel)) +
+  geom_point(size = 0.02, alpha = 0.5) +
+  stat_ellipse(level = 0.67) +
+  geom_text(aes(x = F2_mean, y =  F1_mean, label = Vowel), size = 2) +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+```{r echo=FALSE}
+low_quality_speakers_plot + facet_wrap_paginate(~Speaker_anon, scales = "free", ncol = 3, nrow = 3, page = 1)
+low_quality_speakers_plot + facet_wrap_paginate(~Speaker_anon, scales = "free", ncol = 3, nrow = 3, page = 2)
+low_quality_speakers_plot + facet_wrap_paginate(~Speaker_anon, scales = "free", ncol = 3, nrow = 3, page = 3)
+low_quality_speakers_plot + facet_wrap_paginate(~Speaker_anon, scales = "free", ncol = 3, nrow = 3, page = 4)
+low_quality_speakers_plot + facet_wrap_paginate(~Speaker_anon, scales = "free", ncol = 3, nrow = 3, page = 5)
+low_quality_speakers_plot + facet_wrap_paginate(~Speaker_anon, scales = "free", ncol = 3, nrow = 3, page = 6)
+low_quality_speakers_plot + facet_wrap_paginate(~Speaker_anon, scales = "free", ncol = 3, nrow = 3, page = 7)
+low_quality_speakers_plot + facet_wrap_paginate(~Speaker_anon, scales = "free", ncol = 3, nrow = 3, page = 8)
+low_quality_speakers_plot + facet_wrap_paginate(~Speaker_anon, scales = "free", ncol = 3, nrow = 3, page = 9)
+```
+
+```{r}
+#plot distibutions of F1 and F2 comparing low quality speakers to those not identified as being low quality
+
+#F1
+speaker_means %>%
+  mutate(removed = Speaker_anon %in% speakers_remove) %>%
+  ggplot(aes(x = F1_sd, colour = removed, fill = removed, linetype = Gender)) +
+  geom_density(alpha = 0.2) +
+  facet_wrap(~Vowel, nrow = 2) +
+  ggtitle("F1 sd distirbutions") +
+  theme_bw() + 
+  theme(legend.position = 'top', 
+        legend.direction = "horizontal", 
+        legend.box = "horizontal") + 
+  guides(color = guide_legend(title.position = "top", 
+                              # hjust = 0.5 centres the title horizontally
+                              title.hjust = 0.5),
+         linetype = guide_legend(title.position = "top", 
+                              # hjust = 0.5 centres the title horizontally
+                              title.hjust = 0.5))
+
+#F2
+speaker_means %>%
+  mutate(removed = Speaker_anon %in% speakers_remove) %>%
+  ggplot(aes(x = F2_sd, colour = removed, fill = removed, linetype = Gender)) +
+  geom_density(alpha = 0.2) +
+  facet_wrap(~Vowel, nrow = 2) +
+  ggtitle("F2 sd distributions") +
+  theme_bw() + 
+  theme(legend.position = 'top', 
+        legend.direction = "horizontal", 
+        legend.box = "horizontal") + 
+  guides(color = guide_legend(title.position = "top", 
+                              # hjust = 0.5 centres the title horizontally
+                              title.hjust = 0.5),
+         linetype = guide_legend(title.position = "top", 
+                              # hjust = 0.5 centres the title horizontally
+                              title.hjust = 0.5))
+
+#store the low quality speakers data
+low_quality_speakers_data <- vowels_all %>%
+  filter(Speaker_anon %in% speakers_remove)
+
+#filter out the low quality speakers from the dataset
+vowels_all <- vowels_all %>%
+  filter(!Speaker_anon %in% speakers_remove)
+```
+
+### Low n tokens
+
+In order to ensure that speakers in the dataset have sufficient numbers of tokens for each of the vowels, we will next filter out any speaker with < 5 tokens for any of the vowels. The code below will calculate the number of tokens per speaker and per vowel, then remove speakers with < 5 tokens for any vowel from the dataset (removing all of their other tokens in the process).
+
+```{r}
+#count number of vowels per speaker and store list of speakers with < 5 tokens in any vowel
+low_n_speakers <- vowels_all %>%
+  group_by(Speaker, Vowel) %>%
+  count() %>%
+  ungroup() %>%
+  filter(n < 5) %>%
+  select(Speaker)
+
+#filter out the speakers with < 5 tokens
+vowels_all <- vowels_all %>%
+  ungroup() %>%
+  filter(!Speaker %in% low_n_speakers$Speaker)
+```
+
+### Following 'l' or 'r' segments
+
+We also wanted to filter out any tokens that have a `l` or `r` as the segment following the vowel being analysed. Therefore, we queried LaBB-CAT for this information which is stored in the `ONZE_following_segments.rds` file. We will load in this data and add the relevant information to our current dataset, then remove any tokens that have a following `l` or `r`.
+
+```{r}
+#load in the following segment data
+following_segment_data <- readRDS("Filtering_data/ONZE_following_segments.rds") %>%
+  rename(following_segment = Token.1..segments) %>%
+  mutate(following_segment = as.character(following_segment)) %>%
+  select(Speaker:following_segment, -Error, -Target.stress)
+
+#add the following segement information to the dataset then filter out tokens with a `l` or `r` following the vowel
+vowels_all <- vowels_all %>%
+  cbind(., following_segment_data[,c("following_segment")]) %>%
+  rename(following_segment = `following_segment_data[, c(\"following_segment\")]`) %>%
+  filter(!following_segment %in% c("l", "r"))
+```
+
+### Filter out speakers at end of year of birth distribution
+
+In order to ensure the speakers at the very ends of the year of birth distribution do not inadvertently affect the statistical modelling steps that are conducted in the main analysis (i.e. the GAMMs), we decided to remove speakers who were at the edges of our year of birth distribution. By removing these speakers, the data is better suited for the analysis as it means that there are fewer observations that may represent specific time points with low speaker counts.
+
+Note, the decision to remove these speakers was made after running through an earlier version of the final analyses. Removing these speakers did not affect the pattern of results reported in the paper, we chose to implement this filtering step as it most appropriate for the statistical modelling procedure used in the main analysis.
+
+This removes 13 speakers in total, 3 born before 1863 and 10 born after 1983.
+
+The distribution of year of births is given in the histogram below, with the red dashed lines indicating the position where we filtered the speakers.
+
+```{r}
+#histogram of the data by year of birth and gender
+vowels_all %>%
+  select(Speaker, Gender, participant_year_of_birth) %>%
+  distinct() %>%
+  ggplot(aes(x = participant_year_of_birth, fill = Gender, colour = Gender)) +
+  geom_histogram(aes(position="identity"),
+                 binwidth=1,
+                 alpha = 0.8, colour = NA) +
+  geom_rug(alpha = 0.2) +
+  scale_x_continuous(breaks = seq(1860, 1990, 15)) +
+  scale_fill_manual(values = c("#f1a340", "#998ec3")) +
+  scale_color_manual(values = c("#f1a340", "#998ec3")) +
+  geom_vline(xintercept = 1863.5, colour = "red", linetype = 2) +
+  geom_vline(xintercept = 1983.5, colour = "red", linetype = 2) +
+  geom_label(data = vowels_all %>% select(Speaker, Gender, participant_year_of_birth) %>% distinct() %>% group_by(Gender) %>% summarise(n = n()), aes(x = 1865, y = 20, label = paste0("Before filtering:\nN female = ", n[1], "\nN male = ", n[2], "\nN total = ", sum(n))), hjust=0, inherit.aes = FALSE) +
+  geom_label(data = vowels_all %>% filter(participant_year_of_birth > 1863 & participant_year_of_birth < 1983) %>% select(Speaker, Gender, participant_year_of_birth) %>% distinct() %>% group_by(Gender) %>% summarise(n = n()), aes(x = 1892, y = 20, label = paste0("After filtering:\nN female = ", n[1], "\nN male = ", n[2], "\nN total = ", sum(n))), hjust=0, inherit.aes = FALSE) +
+  theme_bw() +
+  theme(legend.position = "top")
+
+```
+```{r}
+#filter the speakers born at the tails
+vowels_all <- vowels_all %>%
+  filter(participant_year_of_birth > 1863 & participant_year_of_birth < 1983)
+```
+
+# Save the dataset
+
+**Purpose: export the filtered data for the analysis script**
+
+Now that the data filtering steps have been carried out, the final dataset is ready to be saved and used in the analysis file. We will store this file in the `data` folder of the repository.
+
+We will keep only a subset of the variables as these are the ones used for the main analysis.
+
+```{r}
+vowels_all <- vowels_all %>%
+  arrange(Speaker) %>%
+  mutate_if(is.character, as.factor) %>%
+  select(Speaker_anon,
+         Transcript_anon,
+         Corpus,
+         Gender,
+         participant_year_of_birth,
+         Word_anon,
+         Vowel,
+         F1_50,
+         F2_50,
+         Speech_rate) %>%
+  rename(Speaker = Speaker_anon,
+         Transcript = Transcript_anon,
+         Word = Word_anon)
+
+saveRDS(vowels_all, "Data/ONZE_vowels_filtered_anon.rds")
+
+```
