@@ -279,7 +279,7 @@ div.tocify {
 <h1 class="title toc-ignore">Systematic co-variation of monophthongs across speakers of New Zealand English</h1>
 <h3 class="subtitle">Supplementary materials: <em>Analysis script</em></h3>
 <h4 class="author">James Brand<sup>1</sup>, Jen Hay<sup>1,2</sup>, Lynn Clark<sup>2</sup>, Kevin Watson<sup>2</sup> &amp; Márton Sóskuthy<sup>3</sup><br><br/> <sup>1</sup>New Zealand Institute for Language, Brain and Behaviour, Univeristy of Canterbury, NZ<br> <sup>2</sup>Department of Linguistics, Univeristy of Canterbury, NZ<br><sup>3</sup>Department of Linguistics, The University of British Columbia, CA<br/><br/>Corresponding author: James Brand<br/>Email: <a href="mailto:james.brand@canterbury.ac.nz">james.brand@canterbury.ac.nz</a><br/>Website: <a href="https://jamesbrandscience.github.io" class="uri">https://jamesbrandscience.github.io</a></h4>
-<h4 class="date">28 August, 2020</h4>
+<h4 class="date">30 August, 2020</h4>
 
 </div>
 
@@ -297,7 +297,7 @@ div.tocify {
 <p>Note that in the project repository, large and computationally expensive processes, such as the GAMM modelling, have been pre-run and important data stored in the <code>Data</code> folder. This has been done to ensure the compilation of this file is achieved relatively quickly and can be hosted online (i.e. via GitHub and OSF), in addition to allowing others to have quick access to all the required data. These steps are included in this file and can be run on your own computer to reproduce all the original files. When pre-run steps have been carried out, they are identifiable in the <code>.Rmd</code> file by the chunks having an <code>eval=FALSE</code> argument. If you are running these chunks, please ensure you have sufficient memory avialable (I require 13.18GB to store the <code>Analysis</code> folder, when all models are saved).</p>
 <pre class="r"><code>cat(paste0(&quot;Start time:\n&quot;, format(Sys.time(), &quot;%d %B %Y, %r&quot;)))</code></pre>
 <pre><code>## Start time:
-## 28 August 2020, 06:57:03 pm</code></pre>
+## 30 August 2020, 07:23:02 pm</code></pre>
 <pre class="r"><code>start_time &lt;- Sys.time()</code></pre>
 </div>
 <div id="analysis-steps" class="section level1">
@@ -2061,7 +2061,7 @@ mod_pred_PC_values &lt;- cbind(mod_pred_PC1_values_plot %&gt;%
   scale_size_continuous(range = c(1, 5), guide = &quot;none&quot;) +
   # facet_wrap(~Vowel) +
   theme_bw() +
-  theme(legend.position = &quot;bottom&quot;, axis.title = element_text(size = 14, face = &quot;bold&quot;), legend.title = element_text(size = 14, face = &quot;bold&quot;))
+  theme(legend.position = &quot;bottom&quot;, axis.title = element_text(size = 14, face = &quot;bold&quot;), legend.title = element_text(size = 14, face = &quot;bold&quot;), legend.text = element_text(size = 14, face = &quot;bold&quot;))
 
 mod_pred_PC1_values_vowel_plot</code></pre>
 <p><img src="Covariation_monophthongs_analysis_files/figure-html/unnamed-chunk-40-1.png" width="1500" /></p>
@@ -2088,7 +2088,7 @@ mod_pred_PC2_values_vowel_plot &lt;- mod_pred_PC2_values_plot %&gt;%
   scale_size_continuous(range = c(1, 5), guide = &quot;none&quot;) +
   # facet_wrap(~Vowel) +
   theme_bw() +
-  theme(legend.position = &quot;bottom&quot;, axis.title = element_text(size = 14, face = &quot;bold&quot;), legend.title = element_text(size = 14, face = &quot;bold&quot;))
+  theme(legend.position = &quot;bottom&quot;, axis.title = element_text(size = 14, face = &quot;bold&quot;), legend.title = element_text(size = 14, face = &quot;bold&quot;), legend.text = element_text(size = 14, face = &quot;bold&quot;))
 
 mod_pred_PC2_values_vowel_plot</code></pre>
 <p><img src="Covariation_monophthongs_analysis_files/figure-html/unnamed-chunk-40-2.png" width="1500" /></p>
@@ -2115,7 +2115,7 @@ mod_pred_PC3_values_vowel_plot &lt;- mod_pred_PC3_values_plot %&gt;%
   scale_size_continuous(range = c(1, 5), guide = &quot;none&quot;) +
   # facet_wrap(~Vowel) +
   theme_bw() +
-  theme(legend.position = &quot;bottom&quot;, axis.title = element_text(size = 14, face = &quot;bold&quot;), legend.title = element_text(size = 14, face = &quot;bold&quot;))
+  theme(legend.position = &quot;bottom&quot;, axis.title = element_text(size = 14, face = &quot;bold&quot;), legend.title = element_text(size = 14, face = &quot;bold&quot;), legend.text = element_text(size = 14, face = &quot;bold&quot;))
 
 mod_pred_PC3_values_vowel_plot</code></pre>
 <p><img src="Covariation_monophthongs_analysis_files/figure-html/unnamed-chunk-40-3.png" width="1500" /></p>
@@ -4572,6 +4572,7 @@ for (i in model_summary_files) {
 </div>
 <div id="shiny-app-data" class="section level1">
 <h1>Shiny app data</h1>
+<p>In this step we will save the data and plots that are used in the Shiny app.</p>
 <pre class="r"><code>#create data containing means for each speaker and vowel as well as the speaker and variable loadings
 Speaker_vowel_means &lt;- vowels_all %&gt;%
   group_by(Speaker, Corpus, Gender, participant_year_of_birth, Vowel) %&gt;%
@@ -4583,7 +4584,10 @@ Speaker_vowel_means &lt;- vowels_all %&gt;%
   left_join(PC1_change_labels1 %&gt;% select(Vowel, PC1_loadings_abs)) %&gt;%
   left_join(PC2_change_labels1 %&gt;% select(Vowel, PC2_loadings_abs)) %&gt;%
   left_join(PC3_change_labels1 %&gt;% select(Vowel, PC3_loadings_abs)) %&gt;%
-  ungroup()
+  ungroup() %&gt;%
+  mutate(Comp.1 = round(-Comp.1, 3),
+         Comp.2 = round(-Comp.2, 3),
+         Comp.3 = round(-Comp.3, 3))
 
 #save the file in the shiny app folder
 saveRDS(Speaker_vowel_means, &quot;Covariation_shiny/ONZE_summary.rds&quot;)
@@ -4593,45 +4597,82 @@ mod_pred_data &lt;- sound_change_plot_data %&gt;%
   dplyr::rename(F1_yob = F1,
                 F2_yob = F2)
 
-# %&gt;%
-#   cbind(mod_pred_PC1_values %&gt;%
-#           select(Comp.1, Vowel, Formant, intercepts1) %&gt;%
-#           pivot_wider(names_from = Formant, values_from = intercepts1) %&gt;%
-#           dplyr::rename(F1_PC1 = F1,
-#                 F2_PC1 = F2)) %&gt;%
-#           # mutate(Comp.1 = ifelse(Comp.1 &gt;= 0, as.numeric(as.character(substr(Comp.1, 1, 5))),
-#           #                        as.numeric(as.character(substr(Comp.1, 1, 6)))))) %&gt;%
-#   cbind(mod_pred_PC2_values %&gt;%
-#           select(Comp.2, Vowel, Formant, intercepts1) %&gt;%
-#           pivot_wider(names_from = Formant, values_from = intercepts1) %&gt;%
-#           dplyr::rename(F1_PC2 = F1,
-#                 F2_PC2 = F2)) %&gt;%
-#           # mutate(Comp.2 = ifelse(Comp.2 &gt;= 0, as.numeric(as.character(substr(Comp.2, 1, 5))),
-#           #                        as.numeric(as.character(substr(Comp.2, 1, 6)))))) %&gt;%
-#   cbind(mod_pred_PC3_values %&gt;%
-#           select(Comp.3, Vowel, Formant, intercepts1) %&gt;%
-#           pivot_wider(names_from = Formant, values_from = intercepts1) %&gt;%
-#           dplyr::rename(F1_PC3 = F1,
-#                 F2_PC3 = F2)) %&gt;%
-#           # mutate(Comp.3 = ifelse(Comp.3 &gt;= 0, as.numeric(as.character(substr(Comp.3, 1, 5))),
-#           #                        as.numeric(as.character(substr(Comp.3, 1, 6)))))) %&gt;%
-#   left_join(PC1_change_labels1 %&gt;% select(Vowel, PC1_loadings_abs)) %&gt;%
-#   left_join(PC2_change_labels1 %&gt;% select(Vowel, PC2_loadings_abs)) %&gt;%
-#   left_join(PC3_change_labels1 %&gt;% select(Vowel, PC3_loadings_abs))
-
 saveRDS(mod_pred_data, &quot;Covariation_shiny/mod_pred_data.rds&quot;)
 
-saveRDS(mod_pred_PC_values, &quot;Covariation_shiny/mod_pred_PC_values_data.rds&quot;)</code></pre>
+saveRDS(mod_pred_PC_values, &quot;Covariation_shiny/mod_pred_PC_values_data.rds&quot;)
+
+#plots
+ggsave(plot = mod_pred_PC1_values_vowel_plot, filename = &quot;Covariation_shiny/www/mod_pred_PC1_values_vowel_plot.png&quot;, width = 7, height = 7, dpi = 400)
+
+ggsave(plot = mod_pred_PC2_values_vowel_plot, filename = &quot;Covariation_shiny/www/mod_pred_PC2_values_vowel_plot.png&quot;, width = 7, height = 7, dpi = 400)
+
+ggsave(plot = mod_pred_PC3_values_vowel_plot, filename = &quot;Covariation_shiny/www/mod_pred_PC3_values_vowel_plot.png&quot;, width = 7, height = 7, dpi = 400)
+s</code></pre>
+<pre><code>## function (..., k = -1, fx = FALSE, bs = &quot;tp&quot;, m = NA, by = NA, 
+##     xt = NULL, id = NULL, sp = NULL, pc = NULL) 
+## {
+##     vars &lt;- as.list(substitute(list(...)))[-1]
+##     d &lt;- length(vars)
+##     by.var &lt;- deparse(substitute(by), backtick = TRUE, width.cutoff = 500)
+##     if (by.var == &quot;.&quot;) 
+##         stop(&quot;by=. not allowed&quot;)
+##     term &lt;- deparse(vars[[1]], backtick = TRUE, width.cutoff = 500)
+##     if (term[1] == &quot;.&quot;) 
+##         stop(&quot;s(.) not supported.&quot;)
+##     if (d &gt; 1) 
+##         for (i in 2:d) {
+##             term[i] &lt;- deparse(vars[[i]], backtick = TRUE, width.cutoff = 500)
+##             if (term[i] == &quot;.&quot;) 
+##                 stop(&quot;s(.) not yet supported.&quot;)
+##         }
+##     for (i in 1:d) term[i] &lt;- attr(terms(reformulate(term[i])), 
+##         &quot;term.labels&quot;)
+##     k.new &lt;- round(k)
+##     if (all.equal(k.new, k) != TRUE) {
+##         warning(&quot;argument k of s() should be integer and has been rounded&quot;)
+##     }
+##     k &lt;- k.new
+##     if (length(unique(term)) != d) 
+##         stop(&quot;Repeated variables as arguments of a smooth are not permitted&quot;)
+##     full.call &lt;- paste(&quot;s(&quot;, term[1], sep = &quot;&quot;)
+##     if (d &gt; 1) 
+##         for (i in 2:d) full.call &lt;- paste(full.call, &quot;,&quot;, term[i], 
+##             sep = &quot;&quot;)
+##     label &lt;- paste(full.call, &quot;)&quot;, sep = &quot;&quot;)
+##     if (!is.null(id)) {
+##         if (length(id) &gt; 1) {
+##             id &lt;- id[1]
+##             warning(&quot;only first element of `id&#39; used&quot;)
+##         }
+##         id &lt;- as.character(id)
+##     }
+##     ret &lt;- list(term = term, bs.dim = k, fixed = fx, dim = d, 
+##         p.order = m, by = by.var, label = label, xt = xt, id = id, 
+##         sp = sp)
+##     if (!is.null(pc)) {
+##         if (length(pc) &lt; d) 
+##             stop(&quot;supply a value for each variable for a point constraint&quot;)
+##         if (!is.list(pc)) 
+##             pc &lt;- as.list(pc)
+##         if (is.null(names(pc))) 
+##             names(pc) &lt;- unlist(lapply(vars, all.vars))
+##         ret$point.con &lt;- pc
+##     }
+##     class(ret) &lt;- paste(bs, &quot;.smooth.spec&quot;, sep = &quot;&quot;)
+##     ret
+## }
+## &lt;bytecode: 0x7fd93dfecc00&gt;
+## &lt;environment: namespace:mgcv&gt;</code></pre>
 <pre class="r"><code>cat(paste0(&quot;End time:\n&quot;, format(Sys.time(), &quot;%d %B %Y, %r&quot;)))</code></pre>
 <pre><code>## End time:
-## 28 August 2020, 07:08:20 pm</code></pre>
+## 30 August 2020, 07:34:27 pm</code></pre>
 <pre class="r"><code>end_time &lt;- Sys.time()
 
 cat(paste0(&quot;\n---------------\nTotal time to compile:\n&quot;, as.numeric(end_time - start_time), &quot; minutes\n---------------\n&quot;))</code></pre>
 <pre><code>## 
 ## ---------------
 ## Total time to compile:
-## 11.2796084483465 minutes
+## 11.4049799998601 minutes
 ## ---------------</code></pre>
 </div>
 

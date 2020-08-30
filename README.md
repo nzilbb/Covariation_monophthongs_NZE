@@ -4,7 +4,7 @@ Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systemat
 
 [![](https://img.shields.io/badge/GitHub-repo-blue?labelColor=lightgrey&logo=github)](https://github.com/nzilbb/Covariation_monophthongs_NZE)
 [![](https://tinyurl.com/osfshield1)](https://osf.io/q4j29/)
-[![](https://img.shields.io/badge/Preprint-pdf-blue?labelColor=lightgrey&logo=Adobe-Acrobat-Reader)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Write_up/Covariation_monophthongs_NZE.pdf)
+[![](https://img.shields.io/badge/Preprint-pdf-blue?labelColor=lightgrey&logo=Adobe-Acrobat-Reader)	](https://nzilbb.github.io/Covariation_monophthongs_NZE/Write_up/Covariation_monophthongs_NZE.pdf)
 [![](https://img.shields.io/badge/Analysis-html-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
 [![](https://img.shields.io/badge/Shiny-link-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://nzilbb.shinyapps.io/Covariation_shiny/)
 

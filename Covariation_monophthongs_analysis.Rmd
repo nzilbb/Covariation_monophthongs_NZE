@@ -1709,7 +1709,7 @@ mod_pred_PC1_values_vowel_plot <- mod_pred_PC1_values_plot %>%
   scale_size_continuous(range = c(1, 5), guide = "none") +
   # facet_wrap(~Vowel) +
   theme_bw() +
-  theme(legend.position = "bottom", axis.title = element_text(size = 14, face = "bold"), legend.title = element_text(size = 14, face = "bold"))
+  theme(legend.position = "bottom", axis.title = element_text(size = 14, face = "bold"), legend.title = element_text(size = 14, face = "bold"), legend.text = element_text(size = 14, face = "bold"))
 
 mod_pred_PC1_values_vowel_plot
 
@@ -1736,7 +1736,7 @@ mod_pred_PC2_values_vowel_plot <- mod_pred_PC2_values_plot %>%
   scale_size_continuous(range = c(1, 5), guide = "none") +
   # facet_wrap(~Vowel) +
   theme_bw() +
-  theme(legend.position = "bottom", axis.title = element_text(size = 14, face = "bold"), legend.title = element_text(size = 14, face = "bold"))
+  theme(legend.position = "bottom", axis.title = element_text(size = 14, face = "bold"), legend.title = element_text(size = 14, face = "bold"), legend.text = element_text(size = 14, face = "bold"))
 
 mod_pred_PC2_values_vowel_plot
 
@@ -1763,7 +1763,7 @@ mod_pred_PC3_values_vowel_plot <- mod_pred_PC3_values_plot %>%
   scale_size_continuous(range = c(1, 5), guide = "none") +
   # facet_wrap(~Vowel) +
   theme_bw() +
-  theme(legend.position = "bottom", axis.title = element_text(size = 14, face = "bold"), legend.title = element_text(size = 14, face = "bold"))
+  theme(legend.position = "bottom", axis.title = element_text(size = 14, face = "bold"), legend.title = element_text(size = 14, face = "bold"), legend.text = element_text(size = 14, face = "bold"))
 
 mod_pred_PC3_values_vowel_plot
 
@@ -3838,6 +3838,8 @@ for (i in model_summary_files) {
 
 # Shiny app data
 
+In this step we will save the data and plots that are used in the Shiny app.
+
 ```{r}
 #create data containing means for each speaker and vowel as well as the speaker and variable loadings
 Speaker_vowel_means <- vowels_all %>%
@@ -3850,7 +3852,10 @@ Speaker_vowel_means <- vowels_all %>%
   left_join(PC1_change_labels1 %>% select(Vowel, PC1_loadings_abs)) %>%
   left_join(PC2_change_labels1 %>% select(Vowel, PC2_loadings_abs)) %>%
   left_join(PC3_change_labels1 %>% select(Vowel, PC3_loadings_abs)) %>%
-  ungroup()
+  ungroup() %>%
+  mutate(Comp.1 = round(-Comp.1, 3),
+         Comp.2 = round(-Comp.2, 3),
+         Comp.3 = round(-Comp.3, 3))
 
 #save the file in the shiny app folder
 saveRDS(Speaker_vowel_means, "Covariation_shiny/ONZE_summary.rds")
@@ -3860,35 +3865,18 @@ mod_pred_data <- sound_change_plot_data %>%
   dplyr::rename(F1_yob = F1,
                 F2_yob = F2)
 
-# %>%
-#   cbind(mod_pred_PC1_values %>%
-#           select(Comp.1, Vowel, Formant, intercepts1) %>%
-#           pivot_wider(names_from = Formant, values_from = intercepts1) %>%
-#           dplyr::rename(F1_PC1 = F1,
-#                 F2_PC1 = F2)) %>%
-#           # mutate(Comp.1 = ifelse(Comp.1 >= 0, as.numeric(as.character(substr(Comp.1, 1, 5))),
-#           #                        as.numeric(as.character(substr(Comp.1, 1, 6)))))) %>%
-#   cbind(mod_pred_PC2_values %>%
-#           select(Comp.2, Vowel, Formant, intercepts1) %>%
-#           pivot_wider(names_from = Formant, values_from = intercepts1) %>%
-#           dplyr::rename(F1_PC2 = F1,
-#                 F2_PC2 = F2)) %>%
-#           # mutate(Comp.2 = ifelse(Comp.2 >= 0, as.numeric(as.character(substr(Comp.2, 1, 5))),
-#           #                        as.numeric(as.character(substr(Comp.2, 1, 6)))))) %>%
-#   cbind(mod_pred_PC3_values %>%
-#           select(Comp.3, Vowel, Formant, intercepts1) %>%
-#           pivot_wider(names_from = Formant, values_from = intercepts1) %>%
-#           dplyr::rename(F1_PC3 = F1,
-#                 F2_PC3 = F2)) %>%
-#           # mutate(Comp.3 = ifelse(Comp.3 >= 0, as.numeric(as.character(substr(Comp.3, 1, 5))),
-#           #                        as.numeric(as.character(substr(Comp.3, 1, 6)))))) %>%
-#   left_join(PC1_change_labels1 %>% select(Vowel, PC1_loadings_abs)) %>%
-#   left_join(PC2_change_labels1 %>% select(Vowel, PC2_loadings_abs)) %>%
-#   left_join(PC3_change_labels1 %>% select(Vowel, PC3_loadings_abs))
-
 saveRDS(mod_pred_data, "Covariation_shiny/mod_pred_data.rds")
 
 saveRDS(mod_pred_PC_values, "Covariation_shiny/mod_pred_PC_values_data.rds")
+
+#plots
+ggsave(plot = mod_pred_PC1_values_vowel_plot, filename = "Covariation_shiny/www/mod_pred_PC1_values_vowel_plot.png", width = 7, height = 7, dpi = 400)
+
+ggsave(plot = mod_pred_PC2_values_vowel_plot, filename = "Covariation_shiny/www/mod_pred_PC2_values_vowel_plot.png", width = 7, height = 7, dpi = 400)
+
+ggsave(plot = mod_pred_PC3_values_vowel_plot, filename = "Covariation_shiny/www/mod_pred_PC3_values_vowel_plot.png", width = 7, height = 7, dpi = 400)
+
+anim_save(sound_change_plot_animation, filename = "Covariation_shiny/www/sound_change_animation.gif")
 
 ```
 
