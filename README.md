@@ -6,7 +6,7 @@ Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systemat
 [![](https://tinyurl.com/osfshield1)](https://osf.io/q4j29/)
 [![](https://img.shields.io/badge/Preprint-pdf-blue?labelColor=lightgrey&logo=Adobe-Acrobat-Reader)	](https://nzilbb.github.io/Covariation_monophthongs_NZE/Write_up/Covariation_monophthongs_NZE.pdf)
 [![](https://img.shields.io/badge/Analysis-html-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
-[![](https://img.shields.io/badge/Shiny-link-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://nzilbb.shinyapps.io/Covariation_shiny/)
+[![](https://img.shields.io/badge/Shiny-link-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://onze.shinyapps.io/Covariation_shiny/)
 
 ![](https://img.shields.io/github/last-commit/nzilbb/Covariation_monophthongs_NZE)
 ![](https://img.shields.io/github/downloads/nzilbb/Covariation_monophthongs_NZE/total.svg)
@@ -102,7 +102,7 @@ You are reading the `README.md` file.
 
 - **Covariation_shiny**
 
-	- All the files that run the shiny web app (accessible [[here]](https://nzilbb.shinyapps.io/Covariation_shiny/))
+	- All the files that run the shiny web app (accessible [[here]](https://onze.shinyapps.io/Covariation_shiny/))
 	- The `app.R` file contains the R code which provides the user interface and server side operations
 	- There are two data files:
 		- `ONZE_summary.rds` contains speaker summaries per vowel (mean F1/F2, demographics, PC scores) and PC vowel-formant loadings. This is used to generate the PC score and vowel space plots

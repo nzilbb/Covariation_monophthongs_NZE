@@ -297,7 +297,7 @@ div.tocify {
 <p>Note that in the project repository, large and computationally expensive processes, such as the GAMM modelling, have been pre-run and important data stored in the <code>Data</code> folder. This has been done to ensure the compilation of this file is achieved relatively quickly and can be hosted online (i.e. via GitHub and OSF), in addition to allowing others to have quick access to all the required data. These steps are included in this file and can be run on your own computer to reproduce all the original files. When pre-run steps have been carried out, they are identifiable in the <code>.Rmd</code> file by the chunks having an <code>eval=FALSE</code> argument. If you are running these chunks, please ensure you have sufficient memory avialable (I require 13.18GB to store the <code>Analysis</code> folder, when all models are saved).</p>
 <pre class="r"><code>cat(paste0(&quot;Start time:\n&quot;, format(Sys.time(), &quot;%d %B %Y, %r&quot;)))</code></pre>
 <pre><code>## Start time:
-## 30 August 2020, 07:23:02 pm</code></pre>
+## 30 August 2020, 08:26:14 pm</code></pre>
 <pre class="r"><code>start_time &lt;- Sys.time()</code></pre>
 </div>
 <div id="analysis-steps" class="section level1">
@@ -4607,72 +4607,18 @@ ggsave(plot = mod_pred_PC1_values_vowel_plot, filename = &quot;Covariation_shiny
 ggsave(plot = mod_pred_PC2_values_vowel_plot, filename = &quot;Covariation_shiny/www/mod_pred_PC2_values_vowel_plot.png&quot;, width = 7, height = 7, dpi = 400)
 
 ggsave(plot = mod_pred_PC3_values_vowel_plot, filename = &quot;Covariation_shiny/www/mod_pred_PC3_values_vowel_plot.png&quot;, width = 7, height = 7, dpi = 400)
-s</code></pre>
-<pre><code>## function (..., k = -1, fx = FALSE, bs = &quot;tp&quot;, m = NA, by = NA, 
-##     xt = NULL, id = NULL, sp = NULL, pc = NULL) 
-## {
-##     vars &lt;- as.list(substitute(list(...)))[-1]
-##     d &lt;- length(vars)
-##     by.var &lt;- deparse(substitute(by), backtick = TRUE, width.cutoff = 500)
-##     if (by.var == &quot;.&quot;) 
-##         stop(&quot;by=. not allowed&quot;)
-##     term &lt;- deparse(vars[[1]], backtick = TRUE, width.cutoff = 500)
-##     if (term[1] == &quot;.&quot;) 
-##         stop(&quot;s(.) not supported.&quot;)
-##     if (d &gt; 1) 
-##         for (i in 2:d) {
-##             term[i] &lt;- deparse(vars[[i]], backtick = TRUE, width.cutoff = 500)
-##             if (term[i] == &quot;.&quot;) 
-##                 stop(&quot;s(.) not yet supported.&quot;)
-##         }
-##     for (i in 1:d) term[i] &lt;- attr(terms(reformulate(term[i])), 
-##         &quot;term.labels&quot;)
-##     k.new &lt;- round(k)
-##     if (all.equal(k.new, k) != TRUE) {
-##         warning(&quot;argument k of s() should be integer and has been rounded&quot;)
-##     }
-##     k &lt;- k.new
-##     if (length(unique(term)) != d) 
-##         stop(&quot;Repeated variables as arguments of a smooth are not permitted&quot;)
-##     full.call &lt;- paste(&quot;s(&quot;, term[1], sep = &quot;&quot;)
-##     if (d &gt; 1) 
-##         for (i in 2:d) full.call &lt;- paste(full.call, &quot;,&quot;, term[i], 
-##             sep = &quot;&quot;)
-##     label &lt;- paste(full.call, &quot;)&quot;, sep = &quot;&quot;)
-##     if (!is.null(id)) {
-##         if (length(id) &gt; 1) {
-##             id &lt;- id[1]
-##             warning(&quot;only first element of `id&#39; used&quot;)
-##         }
-##         id &lt;- as.character(id)
-##     }
-##     ret &lt;- list(term = term, bs.dim = k, fixed = fx, dim = d, 
-##         p.order = m, by = by.var, label = label, xt = xt, id = id, 
-##         sp = sp)
-##     if (!is.null(pc)) {
-##         if (length(pc) &lt; d) 
-##             stop(&quot;supply a value for each variable for a point constraint&quot;)
-##         if (!is.list(pc)) 
-##             pc &lt;- as.list(pc)
-##         if (is.null(names(pc))) 
-##             names(pc) &lt;- unlist(lapply(vars, all.vars))
-##         ret$point.con &lt;- pc
-##     }
-##     class(ret) &lt;- paste(bs, &quot;.smooth.spec&quot;, sep = &quot;&quot;)
-##     ret
-## }
-## &lt;bytecode: 0x7fd93dfecc00&gt;
-## &lt;environment: namespace:mgcv&gt;</code></pre>
+
+anim_save(sound_change_plot_animation, filename = &quot;Covariation_shiny/www/sound_change_animation.gif&quot;)</code></pre>
 <pre class="r"><code>cat(paste0(&quot;End time:\n&quot;, format(Sys.time(), &quot;%d %B %Y, %r&quot;)))</code></pre>
 <pre><code>## End time:
-## 30 August 2020, 07:34:27 pm</code></pre>
+## 30 August 2020, 08:38:24 pm</code></pre>
 <pre class="r"><code>end_time &lt;- Sys.time()
 
 cat(paste0(&quot;\n---------------\nTotal time to compile:\n&quot;, as.numeric(end_time - start_time), &quot; minutes\n---------------\n&quot;))</code></pre>
 <pre><code>## 
 ## ---------------
 ## Total time to compile:
-## 11.4049799998601 minutes
+## 12.1639355858167 minutes
 ## ---------------</code></pre>
 </div>
 
