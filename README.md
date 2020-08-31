@@ -13,7 +13,7 @@ Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systemat
 [![Shiny](https://img.shields.io/badge/Shiny-link-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://onze.shinyapps.io/Covariation_shiny/)
 
 ![Commit](https://img.shields.io/github/last-commit/nzilbb/Covariation_monophthongs_NZE)
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2Fnzilbb%2FCovariation_monophthongs)
+![HitCount](http://hits.dwyl.com/nzilbb/Covariation_monophthongs_NZE.svg)
 
 ---
 
