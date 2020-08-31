@@ -80,7 +80,7 @@ You are reading the `README.md` file.
 	- This file is to be used in RStudio
 	- We do not provide the raw data for this file to run as it contains information about the speakers that we do not wish to make publicly available
 
-- **Covariation_monophthongs_filtering_anon.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
+- **Covariation_monophthongs_filtering_anon.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_filtering_anon.html)
 
 	- HTML output of the data filtering file (`Covariation_monophthongs_filtering_anon.Rmd`)
 	- This is used as a web accessible version to show the workflow of the data filtering (accessible [[here]](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_filtering_anon.html))
