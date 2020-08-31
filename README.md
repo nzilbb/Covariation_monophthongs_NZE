@@ -1,4 +1,7 @@
-## Systematic co-variation of monophthongs across speakers of New Zealand English (repository)
+![]("NZILBB2.png")
+
+Systematic co-variation of monophthongs across speakers of New Zealand English (repository)
+======================
 
 Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systematic co-variation of monophthongs across speakers of New Zealand English.
 
