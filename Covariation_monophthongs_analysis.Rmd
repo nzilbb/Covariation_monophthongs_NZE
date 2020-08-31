@@ -1,7 +1,7 @@
 ---
 title: "Systematic co-variation of monophthongs across speakers of New Zealand English"
 subtitle: "Supplementary materials: _Analysis script_"
-author: "James Brand<sup>1</sup>, Jen Hay<sup>1,2</sup>, Lynn Clark<sup>2</sup>, Kevin Watson<sup>2</sup> & Márton Sóskuthy<sup>3</sup><br><br/> <sup>1</sup>New Zealand Institute for Language, Brain and Behaviour, Univeristy of Canterbury, NZ<br> <sup>2</sup>Department of Linguistics, Univeristy of Canterbury, NZ<br><sup>3</sup>Department of Linguistics, The University of British Columbia, CA<br/><br/>Corresponding author: James Brand<br/>Email: james.brand@canterbury.ac.nz<br/>Website: https://jamesbrandscience.github.io"
+author: "James Brand<sup>1</sup>, Jen Hay<sup>1,2</sup>, Lynn Clark<sup>1,2</sup>, Kevin Watson<sup>1,2</sup> & Márton Sóskuthy<sup>3</sup><br><br/> <sup>1</sup>New Zealand Institute for Language, Brain and Behaviour, Univeristy of Canterbury, NZ<br> <sup>2</sup>Department of Linguistics, Univeristy of Canterbury, NZ<br><sup>3</sup>Department of Linguistics, The University of British Columbia, CA<br/><br/>Corresponding author: James Brand<br/>Email: james.brand@canterbury.ac.nz<br/>Website: https://jamesbrandscience.github.io"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:
@@ -23,7 +23,7 @@ output:
 </style>
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message=FALSE, cache = TRUE, dpi=300)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message=FALSE, dpi=400)
 ```
 
 # Document outline
@@ -109,6 +109,11 @@ All data has been made available to reproduce the results, the data file should 
 ```{r}
 #load in the data
 vowels_all <- readRDS("Data/ONZE_vowels_filtered_anon.rds")
+
+ # %>%
+ #  mutate(Speaker = gsub(x = Speaker, pattern = "Darfield", "CRS"),
+ #         Transcript = gsub(x = Transcript, pattern = "Darfield", "CRS"),
+ #         Corpus = gsub(x = Corpus, pattern = "Darfield", "CRS"))
 
 ```
 
@@ -198,10 +203,10 @@ vowels_all %>%
 
 The ONZE dataset comprises four different sub-corpora:
 
-MU - Mobile Unit
-IA - Intermediate Archive
-Darfield - Darfield Corpus
-CC - Canterbury Corpus
+MU - Mobile Unit<br>
+IA - Intermediate Archive<br>
+Darfield - Canterbury Regional Survey<br>
+CC - Canterbury Corpus<br>
 
 Below is a summary of the demographic information for each of the sub-corpora.
 
@@ -874,44 +879,6 @@ correlations_permuted_plot1
 ggsave(plot = correlations_permuted_plot1, filename = "Figures/correlations_permuted_plot.png", width = 7, height = 7, dpi = 400)
 
 ```
-
-<!-- ```{r eval=FALSE} -->
-<!-- gam.F1 <- bam(F1_lobanov_2.0 ~ -->
-<!--                   s(participant_year_of_birth, k=10, bs="ad", by=Gender) + -->
-<!--                   s(participant_year_of_birth, k=10, bs="ad") + -->
-<!--                   Gender + -->
-<!--                   s(Speech_rate) + -->
-<!--                   s(Speaker, bs="re") + -->
-<!--                   s(Word, bs="re"), -->
-<!--                 data=vowels_all %>% filter(Vowel == "NURSE"), -->
-<!--                 discrete=T, nthreads=2) -->
-
-<!-- deriv(gam.F1) -->
-
-<!-- library(gratia) -->
-
-<!-- fderiv(gam.F1, term = "participant_year_of_birth") -->
-
-<!-- my_prediction <- function(data,eps = EPS,unconditional = UNCONDITIONAL){ -->
-<!--   # mod = gam(EVI ~ s(Day), data = data) -->
-<!--   days <- tibble(vowels_all %>% select(participant_year_of_birth) %>% distinct) -->
-<!--   fd <- fderiv(gam.F1, eps = EPS, unconditional = UNCONDITIONAL) -->
-<!--   tibble(Day = days$Day,pred = as.numeric(fd$deriv$participant_year_of_birth$deriv)) -->
-<!-- } -->
-
-<!-- UNCONDITIONAL <- FALSE # unconditional or conditional on estimating smooth params? -->
-<!-- EPS <- 1e-07           # finite difference -->
-
-<!-- df_model <- vowels_all %>%  -->
-<!--   nest(-c(,Year)) %>%  -->
-<!--   mutate(pred = map(data,my_prediction)) -->
-<!-- df_model %>%  -->
-<!--   unnest(pred) %>%  -->
-<!--   ggplot(aes(Day,pred,col = as.factor(Year))) + geom_line() + -->
-<!--   theme_bw() + -->
-<!--   facet_wrap(c('NestID')) -->
-
-<!-- ``` -->
 
 # Principal Components Analysis (PCA)
 

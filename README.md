@@ -4,18 +4,16 @@
 
 ## Systematic co-variation of monophthongs across speakers of New Zealand English (repository)
 
----
-
 Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systematic co-variation of monophthongs across speakers of New Zealand English.
 
-[![](https://img.shields.io/badge/GitHub-repo-blue?labelColor=lightgrey&logo=github)](https://github.com/nzilbb/Covariation_monophthongs_NZE)
-[![](https://tinyurl.com/osfshield1)](https://osf.io/q4j29/)
-[![](https://img.shields.io/badge/Preprint-pdf-blue?labelColor=lightgrey&logo=Adobe-Acrobat-Reader)	](https://nzilbb.github.io/Covariation_monophthongs_NZE/Write_up/Covariation_monophthongs_NZE.pdf)
-[![](https://img.shields.io/badge/Analysis-html-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
-[![](https://img.shields.io/badge/Shiny-link-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://onze.shinyapps.io/Covariation_shiny/)
+[![GitHub](https://img.shields.io/badge/GitHub-repo-blue?labelColor=lightgrey&logo=github)](https://github.com/nzilbb/Covariation_monophthongs_NZE)
+[![OSF](https://tinyurl.com/osfshield1)](https://osf.io/q4j29/)
+[![Pre-print](https://img.shields.io/badge/Preprint-pdf-blue?labelColor=lightgrey&logo=Adobe-Acrobat-Reader)	](https://nzilbb.github.io/Covariation_monophthongs_NZE/Write_up/Covariation_monophthongs_NZE.pdf)
+[![Analysis](https://img.shields.io/badge/Analysis-html-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
+[![Shiny](https://img.shields.io/badge/Shiny-link-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://onze.shinyapps.io/Covariation_shiny/)
 
-![](https://img.shields.io/github/last-commit/nzilbb/Covariation_monophthongs_NZE)
-[![HitCount](http://hits.dwyl.com/nzilbb/Covariation_monophthongs.svg)](http://hits.dwyl.com/nzilbb/Covariation_monophthongs)
+![Commit](https://img.shields.io/github/last-commit/nzilbb/Covariation_monophthongs_NZE)
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2Fnzilbb%2FCovariation_monophthongs)
 
 ---
 
@@ -23,7 +21,7 @@ Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systemat
 
 You can download this repository as a `.zip` file, with all the files described below (advised):
 
-[![](https://img.shields.io/badge/download-.zip-brightgreen)](https://github.com/nzilbb/Covariation_monophthongs_NZE/archive/master.zip)
+[![Download](https://img.shields.io/badge/download-.zip-brightgreen)](https://github.com/nzilbb/Covariation_monophthongs_NZE/archive/master.zip)
 
 Or you can clone this repository using your terminal/command prompt (if you are familiar with GitHub, advised):
 
@@ -39,17 +37,15 @@ You can also download individual files using the ![](https://tinyurl.com/yct7xbr
 
 ---
 
-### Abstract
+## **Abstract**
 
 The study of sound change tends to concentrate on trajectories of particular variables in isolation, but it has proven challenging to move beyond individual or small groups of variables, towards a better theoretical and empirical understanding of _sound systems_. We introduce here, a large scale analysis of how full sound systems co-vary in different ways, demonstrating how constellations of vocalic variables operate together across multiple speakers. By statistically modelling F1 and F2 values for 10 monophthongs of New Zealand English (NZE) with GAMMs, we were able to use the by-speaker intercepts as an estimate of how advanced each speaker was in our corpus, irrespective of known predictors of sound change (i.e. year of birth, gender, speech rate). By using Principal Component Analysis on the intercepts, we were able to investigate the underlying structural co-variation that exists across the vocalic variables. Our results demonstrate the inter-relatedness of vowel productions and vowel changes.  Within a large subset of vowels, we see _'leaders'_ and _'laggers'_.  However there are also vowels which appear to be linked together through structural relationships, and some sets of vowels which appear carry opposing social meaning, such that if you are innovative in one, you tend to be conservative in the other. Our results offer a means to overcome long-standing methodological challenges in the study of phonetic co-variation, offering novel insights into the structure of sound systems across large groups of speakers.
 
 ---
 
-## Repository structure
+## **Repository structure**
 
-In this repository you will find two main folders `Analysis` and `Write_up`.
-
-They are described in detail below.
+In this repository you will find various files. related to the project. They are described in detail below.
 
 You are reading the `README.md` file.
 
@@ -88,6 +84,7 @@ You are reading the `README.md` file.
 - **Data**
 
 	- All data files required to run the main analysis file
+	- The data is described in the manuscript and the .Rmd files
 	- This contains
 		- The raw data file as a R data object `ONZE_vowels_filtered_anon.rds` [![](https://tinyurl.com/yct7xbra)](https://github.com/nzilbb/Covariation_monophthongs_NZE/raw/master/Data/ONZE_vowels_filtered_anon.rds)
 		- The random intercepts for speaker from the GAMMs `gam_intercepts_tmp_new.csv` [![](https://tinyurl.com/yct7xbra)](https://raw.githubusercontent.com/nzilbb/Covariation_monophthongs_NZE/master/Data/gam_intercepts_tmp_new.csv)
@@ -118,9 +115,9 @@ You are reading the `README.md` file.
 
 ---
 
-### Write_up
+### **Write_up**
 
-Manuscript and cover letter.
+This folder contains files that were submitted for publication - the manuscript and cover letter.
 
 - **Covariation_monophthongs_NZE.pdf**
 
