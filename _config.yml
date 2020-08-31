@@ -1,2 +1,1 @@
-remote_theme: poole/hyde
-markdown: kramdown
+remote_theme: rundocs/jekyll-rtd-theme
