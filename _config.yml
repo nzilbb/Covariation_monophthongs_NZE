@@ -3,8 +3,3 @@ exclude: ["Covariation_shiny", "*.Rmd"]
 
 markdown: kramdown
 highlighter: rouge
-kramdown:
-  input: GFM
-  syntax_highlighter_opts:
-    default_lang: R
-    css_class   : 'syntax'
