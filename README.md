@@ -1,4 +1,4 @@
-<img style="align: right;" height="40" src="NZILBB2.png">
+<img style="align: right;" height="40" src="/Covariation_shiny/www/NZILBB2.png">
 
 ---
 
@@ -49,9 +49,7 @@ In this repository you will find various files. related to the project. They are
 
 You are reading the `README.md` file.
 
----
-
-### Analysis
+### Analysis files
 
 - **Covariation_monophthongs_analysis.Rmd** [![](https://tinyurl.com/yct7xbra)](https://raw.githubusercontent.com/nzilbb/Covariation_monophthongs_NZE/master/Covariation_monophthongs_analysis.Rmd)
 
@@ -63,6 +61,10 @@ You are reading the `README.md` file.
 
 	- HTML output of the main analysis file (`Covariation_monophthongs_analysis.Rmd`)
 	- This is used as a web accessible version of the analysis (accessible [[here]](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html))
+
+- **Figures**
+
+	- The figures used in the manuscript
 
 - **Covariation_monophthongs_analysis_files**
 

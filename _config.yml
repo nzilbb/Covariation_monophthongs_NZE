@@ -1,5 +1,4 @@
 theme: minima
-exclude: ["Covariation_shiny", "*.Rmd"]
 
 markdown: kramdown
 highlighter: rouge

@@ -23,7 +23,7 @@ output:
 </style>
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message=FALSE, dpi=400)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message=FALSE, cache = TRUE, dpi=400)
 ```
 
 # Document outline
@@ -110,11 +110,6 @@ All data has been made available to reproduce the results, the data file should 
 #load in the data
 vowels_all <- readRDS("Data/ONZE_vowels_filtered_anon.rds")
 
- # %>%
- #  mutate(Speaker = gsub(x = Speaker, pattern = "Darfield", "CRS"),
- #         Transcript = gsub(x = Transcript, pattern = "Darfield", "CRS"),
- #         Corpus = gsub(x = Corpus, pattern = "Darfield", "CRS"))
-
 ```
 
 We can inspect the data in different ways, to ensure that the correct file has been loaded and for general understanding of how the data is structured.
@@ -173,7 +168,7 @@ data.frame(
 
 ```
 
-Next, we can generate some summary information about the dataset, the following code will reproduce the information provided in **Tables XX**.
+Next, we can generate some summary information about the dataset.
 
 ### Token counts
 
@@ -557,7 +552,7 @@ We interpret the speaker intercepts in terms of how advanced the vowel productio
 
 To demonstrate this, we will visualise the change in `F1` for three vowels, known to have undergone rapid change in New Zealand English (`TRAP`, `DRESS` and `KIT`). We will plot the participant year of birth on the x axis and normalised F1 on the y axis (reverse scaled to match normal vowel plot conventions). To highlight the change in the three vowels over time, we will also fit a  smooth and plot the mean F1 values of each speaker for each of the vowels. Finally, we will highlight 4 speakers who all have intercepts that indicate that they are **advanced** in these vowel changes, i.e. have negative intercepts (smaller F1) for `TRAP` and `DRESS`, but positive intercepts (larger F1) for `KIT`.
 
-The code blocks below will reproduce **Figure XX** in the manuscript. The first chunk calculates mean F1 values / speaker and merges this data with the speaker intercepts from the GAMMs.
+The first chunk calculates mean F1 values / speaker and merges this data with the speaker intercepts from the GAMMs.
 
 The second chunk extracts predictions from the GAMMs for plotting smooths over year of birth. (This code block produces plots that are not included in the RMarkdown output).
 
@@ -1983,7 +1978,7 @@ We will begin by running GAMs to see if any of the socio-demographic variables c
 
 We hypothesise that our initial GAMMs had these variables included in the fixed-effects structure, so, none of the subsequent models should show significant results. If there are no significant effects, then we have confidence in our modelling procedure and that the speaker intercepts are representative of variation independent of the known predictors of change in F1/F2.
 
-In order to statistically assess whether the PC scores are reliably predicted by any of the social variables, we will run a series of GAMs, predicting the PC scores in each of the 3 PCs by each of the social variables. We will also provide visualisations of the results (reproducing **Figure XX**).
+In order to statistically assess whether the PC scores are reliably predicted by any of the social variables, we will run a series of GAMs, predicting the PC scores in each of the 3 PCs by each of the social variables. We will also provide visualisations of the results.
 
 **PC1**
 
@@ -3394,7 +3389,7 @@ PC3_plot_smooth1_important
 
 ### Combined
 
-To inspect the variables easily in one plot, we will now put the sound change plots and the PC plots together. This will reproduce **Figure XX**.
+To inspect the variables easily in one plot, we will now put the sound change plots and the PC plots together.
 
 ```{r  fig.width=18, fig.height=5}
 vowel_plots_combined <- plot_grid(sound_change_plot, PC1_change_plot, PC2_change_plot, PC3_change_plot, nrow = 1)
