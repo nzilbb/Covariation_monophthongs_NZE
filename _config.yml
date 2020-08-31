@@ -3,3 +3,7 @@ header_pages:
   NULL
 markdown: kramdown
 highlighter: rouge
+title: Covariation monophthongs NZE
+author:
+  name: James Brand
+show_excerpts: false # set to true to show excerpts on the homepage
