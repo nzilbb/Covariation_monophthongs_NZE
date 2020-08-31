@@ -1,4 +1,4 @@
 theme: minima
-
+header_pages:
 markdown: kramdown
 highlighter: rouge
