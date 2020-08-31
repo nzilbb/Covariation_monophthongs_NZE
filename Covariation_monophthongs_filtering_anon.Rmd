@@ -36,7 +36,7 @@ This document provides the code used during the data processing stages of the Br
   
   - The data were processed automatically with Praat and were force-aligned using the HTK toolkit
   
-  - The ONZE corpus comprises 4 sub-corpora: _Mobile Unit_ (MU), _Intermediate Archive_ (IA), _Darfield_ (Darfield), _Canterbury Corpus_ (CC). You can find out more on the ONZE corpus at [https://www.canterbury.ac.nz/nzilbb/research/onze/](https://www.canterbury.ac.nz/nzilbb/research/onze/)
+  - The ONZE corpus comprises 4 sub-corpora: _Mobile Unit_ (MU), _Intermediate Archive_ (IA), _Canterbury Regional Survey_ (CRS), _Canterbury Corpus_ (CC). You can find out more on the ONZE corpus at [https://www.canterbury.ac.nz/nzilbb/research/onze/](https://www.canterbury.ac.nz/nzilbb/research/onze/)
   
   - All available speakers were queried and all available tokens containing the following vowel segments were extracted (DRESS, FLEECE, FOOT, GOOSE, KIT, LOT, NURSE, SCHWA, START, STRUT, THOUGHT, TRAP)
   

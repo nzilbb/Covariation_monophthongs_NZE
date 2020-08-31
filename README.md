@@ -9,7 +9,7 @@ Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systemat
 [![](https://img.shields.io/badge/Shiny-link-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://onze.shinyapps.io/Covariation_shiny/)
 
 ![](https://img.shields.io/github/last-commit/nzilbb/Covariation_monophthongs_NZE)
-![](https://img.shields.io/github/downloads/nzilbb/Covariation_monophthongs_NZE/total.svg)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fnzilbb%2FCovariation_monophthongs_NZE%2F&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 ---
 
@@ -51,17 +51,16 @@ You are reading the `README.md` file.
 
 ### Analysis
 
-- **Covariation_monophthongs_analysis.Rmd** [![](https://tinyurl.com/yct7xbra)](https://raw.githubusercontent.com/nzilbb/Covariation_monophthongs_NZE/master/Analysis/Covariation_monophthongs_analysis.Rmd)
+- **Covariation_monophthongs_analysis.Rmd** [![](https://tinyurl.com/yct7xbra)](https://raw.githubusercontent.com/nzilbb/Covariation_monophthongs_NZE/master/Covariation_monophthongs_analysis.Rmd)
 
 	- R Markdown document containing all the code that is required to reproduce the analyses reported in the paper
 	- This file is to be used in RStudio
 	- It requires the `data` folder to work
 
-- **Covariation_monophthongs_filtering_anon.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Analysis/Covariation_monophthongs_analysis.html)
+	- **Covariation_monophthongs_analysis.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
 
-	- HTML output of the data filtering file (`Covariation_monophthongs_filtering_anon.Rmd`)
-	- This is used as a web accessible version to show the workflow of the data filtering (accessible [[here]](LINK))
-
+		- HTML output of the main analysis file (`Covariation_monophthongs_analysis.Rmd`)
+		- This is used as a web accessible version of the analysis (accessible [[here]](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html))
 
 - **Covariation_monophthongs_analysis_files**
 
@@ -69,36 +68,30 @@ You are reading the `README.md` file.
 	- These are in `.png` format and are used as an external source for the images in the `.html` output
 	- Created to reduce the size of the `Covariation_monophthongs_analysis.html` file
 
-- **Covariation_monophthongs_filtering_anon.Rmd** [![](https://tinyurl.com/yct7xbra)](https://raw.githubusercontent.com/nzilbb/Covariation_monophthongs_NZE/master/Analysis/Covariation_monophthongs_filtering_anon.Rmd)
+- **Covariation_monophthongs_filtering_anon.Rmd** [![](https://tinyurl.com/yct7xbra)](https://raw.githubusercontent.com/nzilbb/Covariation_monophthongs_NZE/master/Covariation_monophthongs_filtering_anon.Rmd)
 
 	- R Markdown document containing all the code that was run during the filtering workflow reported in the paper
 	- This file is to be used in RStudio
 	- We do not provide the raw data for this file to run as it contains information about the speakers that we do not wish to make publicly available
 
+	- **Covariation_monophthongs_filtering_anon.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
 
-- **Covariation_monophthongs_analysis.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Analysis/Covariation_monophthongs_analysis.html)
-
-	- HTML output of the main analysis file (`Covariation_monophthongs_analysis.Rmd`)
-	- This is used as a web accessible version of the analysis (accessible [[here]](LINK))
+		- HTML output of the data filtering file (`Covariation_monophthongs_filtering_anon.Rmd`)
+		- This is used as a web accessible version to show the workflow of the data filtering (accessible [[here]](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_filtering_anon.html))
 
 - **Data**
 
 	- All data files required to run the main analysis file
 	- This contains
-		- The raw data file as a R data object `ONZE_vowels_filtered_anon.rds` [![](https://tinyurl.com/yct7xbra)](https://github.com/nzilbb/Covariation_monophthongs_NZE/raw/master/Analysis/Data/ONZE_vowels_filtered_anon.rds)
-		- The random intercepts for speaker from the GAMMs `gam_intercepts_tmp_new.csv` [![](https://tinyurl.com/yct7xbra)](https://raw.githubusercontent.com/nzilbb/Covariation_monophthongs_NZE/master/Analysis/Data/gam_intercepts_tmp_new.csv)
-		- The random intercepts for speaker from the lmers `lmer_intercepts.csv` [![](https://tinyurl.com/yct7xbra)](https://raw.githubusercontent.com/nzilbb/Covariation_monophthongs_NZE/master/Analysis/Data/lmer_intercepts.csv)
+		- The raw data file as a R data object `ONZE_vowels_filtered_anon.rds` [![](https://tinyurl.com/yct7xbra)](https://github.com/nzilbb/Covariation_monophthongs_NZE/raw/master/Data/ONZE_vowels_filtered_anon.rds)
+		- The random intercepts for speaker from the GAMMs `gam_intercepts_tmp_new.csv` [![](https://tinyurl.com/yct7xbra)](https://raw.githubusercontent.com/nzilbb/Covariation_monophthongs_NZE/master/Data/gam_intercepts_tmp_new.csv)
+		- The random intercepts for speaker from the lmers `lmer_intercepts.csv` [![](https://tinyurl.com/yct7xbra)](https://raw.githubusercontent.com/nzilbb/Covariation_monophthongs_NZE/master/Data/lmer_intercepts.csv)
 	- An additional folder `Models` containing pre-run GAMM outputs
 
 - **Figures**
 
 	- All figures produced from the `Covariation_monophthongs_analysis.Rmd` file
 	- These are the images that are used in the manuscript
-
-- **libs**
-
-	- These are libraries used for the compilation of the `Covariation_monophthongs_analysis.html` file
-	- Created to reduce the file size
 
 - **Covariation_shiny**
 
@@ -114,17 +107,15 @@ You are reading the `README.md` file.
 
 	```
 	library(shiny)
-	runUrl( "https://nzilbb.github.io/Covariation_monophthongs_NZE/Analysis/Covariation_shiny.zip")
+	runUrl( "https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_shiny.zip")
 	```
 
 ---
 
 ### Write_up
 
-- **Manuscript**
+Manuscript and cover letter.
 
-- **LaTeX_source**
+- **Covariation_monophthongs_NZE.pdf**
 
-- **references.bib**
-
-- **Cover_letter_JPhon**
+- **Cover_letter_JPhon.pdf**

@@ -23,7 +23,7 @@ output:
 </style>
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message=FALSE, dpi=300)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message=FALSE, cache = TRUE, dpi=300)
 ```
 
 # Document outline
@@ -42,7 +42,7 @@ start_time <- Sys.time()
 
 # Analysis steps
 
-The document covers a number of steps that we completed, all of which can be reproduced by using the code and data in the project repository (**LINK**). In order to orientate the reader, we provide a brief written outline of what the steps are.
+The document covers a number of steps that we completed, all of which can be reproduced by using the code and data in the project repository (https://github.com/nzilbb/Covariation_monophthongs_NZE). In order to orientate the reader, we provide a brief written outline of what the steps are.
 
 1. Load in the data and provide summaries of the how it is structured.
 
@@ -54,7 +54,7 @@ The document covers a number of steps that we completed, all of which can be rep
 
 5. Extract the PCA scores from the PCs, which give each individual speaker a value for each PC, the more extreme (i.e. high or low) this value, the more the speaker contributes to the PC's formation. This will allow us to identify which speakers are representative of the PCs.
 
-6. Assess if any of the PCs can be explained by the fixed-effects from the GAMM fitting procedure, i.e. is there a relationship between the PCA scores and factors such as year of birth or gender. We will provide examples of speaker vowel spaces to assist in the interpreation of the PCs in terms of F1/F2 space (the Shiny app allows for exploration of all speakers, so we recommend that as the optimal tool for understanding speaker variation **LINK**).
+6. Assess if any of the PCs can be explained by the fixed-effects from the GAMM fitting procedure, i.e. is there a relationship between the PCA scores and factors such as year of birth or gender. We will provide examples of speaker vowel spaces to assist in the interpreation of the PCs in terms of F1/F2 space (the Shiny app allows for exploration of all speakers, so we recommend that as the optimal tool for understanding speaker variation https://onze.shinyapps.io/Covariation_shiny/).
 
 7. Following on from the previous inspection of the variables, our interpretation for how they co-vary together within a more theoretical framework (as explained in the paper), was driven by our understanding of the directions of change in F1/F2. To demonstrate this we will run additional GAMMs predicting F1/F2 by the PCA scores. Then visualise how these changes map onto change in New Zealand English.
 
@@ -1036,7 +1036,7 @@ To visualise how the different variables contribute to the formation of the PC, 
 
 The red dashed line in these plots divides the variables on the basis of cumulative variance explained, whereby those variables to the right of the line collectively account for > 50% of the total variance. Thus, our (least arbitrary) way to define a cut-off point for 'importance' of the variables is to focus on those contributing > 50%.
 
-The colour and sign of the dots in these plots is defined by the direction of the loadings in the PCA, i.e. <p style="color:red">-</p> = negative and + = positive.
+The colour and sign of the dots in these plots is defined by the direction of the loadings in the PCA, i.e. <span style="color:red">-</span> = negative and + = positive.
 
 First we will wrangle the data from the PCA.
 
