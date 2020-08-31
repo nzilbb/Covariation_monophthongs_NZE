@@ -1,4 +1,4 @@
-<img style="float: right;" src="NZILBB2.png">
+<img style="float: right;" height="60" src="NZILBB2.png">
 
 Systematic co-variation of monophthongs across speakers of New Zealand English (repository)
 ======================
