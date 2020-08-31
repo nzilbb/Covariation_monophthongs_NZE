@@ -1,4 +1,4 @@
-<img style="align: right;" height="40" src="NZILBB2.png">
+<img style="align: right;" height="40" src="https://github.com/nzilbb/Covariation_monophthongs_NZE/blob/master/Covariation_shiny/www/NZILBB2.png?raw=true">
 
 ---
 
