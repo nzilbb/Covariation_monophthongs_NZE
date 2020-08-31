@@ -121,8 +121,10 @@ You are reading the `README.md` file.
 
 ### **Write_up**
 
-This folder contains files that were submitted for publication - the manuscript and cover letter.
+This folder contains files that were submitted for publication - the manuscript, bibliography file and cover letter.
 
 - **Covariation_monophthongs_NZE.pdf**
 
 - **Cover_letter_JPhon.pdf**
+
+- **Covariation_references.bib**
