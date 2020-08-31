@@ -59,8 +59,8 @@ You are reading the `README.md` file.
 
 - **Covariation_monophthongs_analysis.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
 
-		- HTML output of the main analysis file (`Covariation_monophthongs_analysis.Rmd`)
-		- This is used as a web accessible version of the analysis (accessible [[here]](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html))
+	- HTML output of the main analysis file (`Covariation_monophthongs_analysis.Rmd`)
+	- This is used as a web accessible version of the analysis (accessible [[here]](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html))
 
 - **Covariation_monophthongs_analysis_files**
 
@@ -76,8 +76,8 @@ You are reading the `README.md` file.
 
 - **Covariation_monophthongs_filtering_anon.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
 
-		- HTML output of the data filtering file (`Covariation_monophthongs_filtering_anon.Rmd`)
-		- This is used as a web accessible version to show the workflow of the data filtering (accessible [[here]](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_filtering_anon.html))
+	- HTML output of the data filtering file (`Covariation_monophthongs_filtering_anon.Rmd`)
+	- This is used as a web accessible version to show the workflow of the data filtering (accessible [[here]](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_filtering_anon.html))
 
 - **Data**
 
