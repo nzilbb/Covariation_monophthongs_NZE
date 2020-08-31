@@ -1,7 +1,10 @@
 <img style="float: right;" height="40" src="NZILBB2.png">
-<br>
+
+---
+
 Systematic co-variation of monophthongs across speakers of New Zealand English (repository)
-======================
+
+---
 
 Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systematic co-variation of monophthongs across speakers of New Zealand English.
 
