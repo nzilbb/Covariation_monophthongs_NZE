@@ -1,4 +1,4 @@
-<img style="align: right;" height="40" src="/Covariation_shiny/www/NZILBB2.png">
+<img style="align: right;" height="40" src="NZILBB2.png">
 
 ---
 
@@ -112,7 +112,7 @@ You are reading the `README.md` file.
 
 <br>
 
-	```
+	```r
 	library(shiny)
 	runUrl( "https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_shiny.zip")
 	```
