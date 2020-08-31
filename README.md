@@ -9,7 +9,7 @@ Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systemat
 [![](https://img.shields.io/badge/Shiny-link-blue?labelColor=lightgrey&logo=RStudio&logoColor=GhostWhite)](https://onze.shinyapps.io/Covariation_shiny/)
 
 ![](https://img.shields.io/github/last-commit/nzilbb/Covariation_monophthongs_NZE)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fnzilbb%2FCovariation_monophthongs_NZE%2F&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![HitCount](http://hits.dwyl.com/nzilbb/Covariation_monophthongs.svg)](http://hits.dwyl.com/nzilbb/Covariation_monophthongs)
 
 ---
 
@@ -57,7 +57,7 @@ You are reading the `README.md` file.
 	- This file is to be used in RStudio
 	- It requires the `data` folder to work
 
-	- **Covariation_monophthongs_analysis.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
+- **Covariation_monophthongs_analysis.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
 
 		- HTML output of the main analysis file (`Covariation_monophthongs_analysis.Rmd`)
 		- This is used as a web accessible version of the analysis (accessible [[here]](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html))
@@ -74,7 +74,7 @@ You are reading the `README.md` file.
 	- This file is to be used in RStudio
 	- We do not provide the raw data for this file to run as it contains information about the speakers that we do not wish to make publicly available
 
-	- **Covariation_monophthongs_filtering_anon.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
+- **Covariation_monophthongs_filtering_anon.html** [![](https://tinyurl.com/yct7xbra)](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_analysis.html)
 
 		- HTML output of the data filtering file (`Covariation_monophthongs_filtering_anon.Rmd`)
 		- This is used as a web accessible version to show the workflow of the data filtering (accessible [[here]](https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_monophthongs_filtering_anon.html))
