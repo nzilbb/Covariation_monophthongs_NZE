@@ -1,2 +1,2 @@
 theme: minima
-exclude: ["Covariation_shiny", *.Rmd]s
+exclude: ["Covariation_shiny", "*.Rmd"]
