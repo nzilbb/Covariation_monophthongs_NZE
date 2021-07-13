@@ -310,7 +310,7 @@ The speaker intercepts provide a suitable set of estimates to explore how the vo
 Our chosen analysis technique to find structure amongst a large set of apparent correlations is Principal Component Analysis (PCA) \citep{venables2013modern, PCAIntro}. We explicitly decided not to rely on simple correlation analyses (as represented in Figure \ref{fig:correlations}) given the large number of variables we are exploring and because we had no strong prior hypotheses regarding which variables will co-vary, making inferential statistics unsuitable for our exploratory analysis. Similarly, we chose not to use clustering algorithms because although they traditionally identify groups of variables that cluster together, the clusters do not necessarily provide insights into the identification of leaders and laggers.   That is, it is difficult to simultaneously interrogate which vowels are covarying (and in which direction), and who the particular speakers are who are positioned at the extreme ends of that co-variation. A cluster analysis may identify a group of speakers leading in a certain subset of variables, another group lagging in the same subset of variables, but it will not be able to provide any link between the two. 
 Moreover, a cluster analysis does not offer the multilayered results that PCA does, where independent sources of co-variation can be inspected. Thus, PCA allows for a finer-grained exploration and more theoretically driven interpretation of any co-variation present in the data set, enabling us to not only identify covarying vowels, but identify and visualise specific individuals' vowel spaces that are most responsible for that co-variation.
 
-In addition to the results presented in the following sections, we also offer an interactive web application to explore the results further, accessible at \url{https://nzilbb.shinyapps.io/Covariation_shiny/}. This application allows users to inspect the vowel spaces of each of the 481 speakers, with their individual scores on each of the three PCs, in addition to their demographic information.
+In addition to the results presented in the following sections, we also offer an interactive web application to explore the results further, accessible at \url{https://onze.shinyapps.io/Covariation_shiny/}. This application allows users to inspect the vowel spaces of each of the 481 speakers, with their individual scores on each of the three PCs, in addition to their demographic information.
 
 \section{Results}
 
@@ -653,7 +653,7 @@ The study of how vowels change over time has traditionally examined individual v
     \item The online GitHub repository at:\\ \url{https://github.com/nzilbb/Covariation_monophthongs_NZE}
     \item The Open Science Framework at:\\ \url{https://osf.io/q4j29/}
     \item The online Shiny app (including the animated vowel spaces) can be accessed at:\\
-    \url{https://nzilbb.shinyapps.io/Covariation_shiny/}
+    \url{https://onze.shinyapps.io/Covariation_shiny/}
 \end{itemize}
 
 \noindent Both the GitHub and OSF repositories contain the same files (including the data, data filtering and analysis scripts and the Shiny application). The analysis file also contains additional analyses that were not considered crucial for inclusion in the paper, but may be of interest to readers. For readers not familiar with GitHub or OSF, you can access individual files at \url{https://nzilbb.github.io/Covariation_monophthongs_NZE/}. You will need to install R in order to run some of these files.
