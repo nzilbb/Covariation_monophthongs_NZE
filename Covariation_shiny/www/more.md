@@ -14,9 +14,7 @@ The pre-print of the article can be found at: https://nzilbb.github.io/Covariati
 
 The project pages, with data and analysis scripts can be found at:
 
-GitHub - https://github.com/nzilbb/Covariation_monophthongs_NZE
-
-Open Science Framework - https://osf.io/q4j29/  
+https://nzilbb.github.io/Covariation_monophthongs_NZE/
 
 **Run app locally**
 
@@ -28,4 +26,4 @@ You can also run the app locally using the following R code (note you need the `
 library(shiny)
 
 runUrl( "https://nzilbb.github.io/Covariation_monophthongs_NZE/Covariation_shiny.zip")
-``` 
+```

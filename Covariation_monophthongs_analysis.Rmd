@@ -392,6 +392,41 @@ vowels_all %>%
 
 ```
 
+Make a plot for Figure 1 in the manuscript, of speakers born between 1900-1930. This will show the normalised vowel space and individual speaker means for the 10 vowels. There will also be ellipses to show the variation in the vowel productions and the black points indicate the individual vowel means, calculated across the sample of speakers.
+
+```{r}
+#calculate individual speaker means for each vowel
+vowel_means_example <- vowels_all %>%
+  filter(participant_year_of_birth %in% c(1900:1930)) %>%
+  group_by(Speaker, Vowel, Gender, participant_year_of_birth) %>%
+  summarise(mean_F1 = mean(F1_lobanov_2.0),
+            mean_F2 = mean(F2_lobanov_2.0))
+
+vowel_means_example1 <- vowels_all %>%
+  filter(participant_year_of_birth %in% c(1900:1930)) %>%
+  group_by(Vowel) %>%
+  summarise(mean_F1 = mean(F1_lobanov_2.0),
+            mean_F2 = mean(F2_lobanov_2.0))
+
+vowel_means_example_plot <- vowel_means_example %>%
+  ggplot(aes(x = mean_F2, y = mean_F1, colour = Vowel)) +
+  geom_point() +
+  stat_ellipse(level = 0.67) +
+  geom_label(data = vowel_means_example1, aes(label = Vowel)) +
+  geom_point(data = vowel_means_example %>% filter(Speaker == "CC_f_326")) +
+  geom_point(data = vowel_means_example %>% filter(Speaker == "CC_f_326"), colour = "black", size = 3, shape = 5, stroke = 2) +
+  scale_x_reverse(name = "F2 (Normalised)", position = "top") +
+  scale_y_reverse(name = "F1 (Normalised)", position = "right") +
+  theme_bw() +
+  theme(legend.position = "none")
+
+vowel_means_example_plot
+
+ggsave(plot = vowel_means_example_plot, filename = "Figures/vowel_means_example.png", dpi = 400)
+
+```
+
+
 # GAMM modelling
 
 In order to analyse co-variation in the dataset, we first must extract a measure of how the speakers vocalic variables differ from one another. To achieve this, we first run a series of Generalised Additive Mixed Models (GAMMs), from which we can extract the by-speaker random intercepts. This is done using the `mgcv` and `itsadug` packages, if you are unfamiliar with this form of analysis, see (Winter and Wieling, (2016))[https://academic.oup.com/jole/article/1/1/7/2281883] or (Sóskuthy, (2017))[https://arxiv.org/abs/1703.05339], for further information about why we chose the by-speaker intercepts, please refer to the manuscript or see [Drager and Hay (2012)](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/6B661A6226E015A613AB22616C9C2300/S0954394512000014a.pdf/exploiting_random_intercepts_two_case_studies_in_sociophonetics.pdf)

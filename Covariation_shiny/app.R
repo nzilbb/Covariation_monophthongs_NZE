@@ -2,7 +2,6 @@ library(tidyverse)
 library(DT)
 library(plotly)
 library(shiny)
-library(reshape2)
 library(shinyalert)
 library(shinydashboard)
 library(shinythemes)
@@ -120,7 +119,7 @@ ui <- navbarPage(
                           plotlyOutput("PC1_vowels", height = 300, width = 300))
                    ,
                    column(width = 2, align="right",
-                          img(src = 'mod_pred_PC1_values_vowel_plot.png', width = 350, height = 350,
+                          img(src = 'mod_pred_PC1_values_vowel_plot.png', width = 325, height = 325,
                               style='padding:20px;')
                    )
                )
@@ -136,7 +135,7 @@ ui <- navbarPage(
                           plotlyOutput("PC2_vowels", height = 300, width = 300))
                    ,
                    column(width = 2,
-                          img(src = 'mod_pred_PC2_values_vowel_plot.png', width = 350, height = 350,
+                          img(src = 'mod_pred_PC2_values_vowel_plot.png', width = 325, height = 325,
                               style='padding:20px;')
                    )
                )
@@ -152,7 +151,7 @@ ui <- navbarPage(
                           plotlyOutput("PC3_vowels", height = 300, width = 300))
                    ,
                    column(width = 2,
-                          img(src = 'mod_pred_PC3_values_vowel_plot.png', width = 350, height = 350,
+                          img(src = 'mod_pred_PC3_values_vowel_plot.png', width = 325, height = 325,
                               style='padding:20px;')
                    )
                ),
