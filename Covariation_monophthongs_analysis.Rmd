@@ -23,7 +23,7 @@ output:
 </style>
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message=FALSE, cache = TRUE, dpi=400)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message=FALSE, dpi=400)
 ```
 
 # Document outline
@@ -1395,7 +1395,7 @@ We can also recreate the above plot in 3 dimensional space, where the trajectori
 
 - trails = the previous positions of the vowels
 
-```{r fig.width=4, fig.height=5}
+```{r eval=FALSE, fig.width=4, fig.height=5}
 sound_change_plot_animation <- sound_change_plot_data %>%
   #set general aesthetics
   ggplot(aes(x = F2, y = F1, colour = Vowel, group = Vowel, label = Vowel)) +
@@ -2653,7 +2653,7 @@ PC1_change_plot
 
 - trails = the previous positions of the vowels
 
-```{r fig.width=4, fig.height=4}
+```{r eval=FALSE, fig.width=4, fig.height=4}
 PC1_plot_animation <- PC1_plot_data %>%
   arrange(Comp.1) %>%
   #set general aesthetics
@@ -2876,7 +2876,7 @@ PC2_change_plot
 
 ### Visualisation by animation
 
-```{r fig.width=4, fig.height=4}
+```{r eval=FALSE, fig.width=4, fig.height=4}
 PC2_plot_animation <- PC2_plot_data %>%
   arrange(Comp.2) %>%
   #set general aesthetics
@@ -3098,7 +3098,7 @@ PC3_change_plot
 
 **Visualisation by animation**
 
-```{r fig.width=4, fig.height=4}
+```{r eval=FALSE, fig.width=4, fig.height=4}
 PC3_plot_animation <- PC3_plot_data %>%
   arrange(Comp.3) %>%
   #set general aesthetics
@@ -3837,7 +3837,7 @@ for (i in model_summary_files) {
 
 In this step we will save the data and plots that are used in the Shiny app.
 
-```{r}
+```{r eval=FALSE}
 #create data containing means for each speaker and vowel as well as the speaker and variable loadings
 Speaker_vowel_means <- vowels_all %>%
   group_by(Speaker, Corpus, Gender, participant_year_of_birth, Vowel) %>%

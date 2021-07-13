@@ -285,7 +285,7 @@ div.tocify {
 <p>Note that in the project repository, large and computationally expensive processes, such as the GAMM modelling, have been pre-run and important data stored in the <code>Data</code> folder. This has been done to ensure the compilation of this file is achieved relatively quickly and can be hosted online (i.e. via GitHub and OSF), in addition to allowing others to have quick access to all the required data. These steps are included in this file and can be run on your own computer to reproduce all the original files. When pre-run steps have been carried out, they are identifiable in the <code>.Rmd</code> file by the chunks having an <code>eval=FALSE</code> argument. If you are running these chunks, please ensure you have sufficient memory avialable (I require 13.18GB to store the <code>Analysis</code> folder, when all models are saved).</p>
 <pre class="r"><code>cat(paste0(&quot;Start time:\n&quot;, format(Sys.time(), &quot;%d %B %Y, %r&quot;)))</code></pre>
 <pre><code>## Start time:
-## 13 July 2021, 04:33:13 pm</code></pre>
+## 13 July 2021, 05:23:11 pm</code></pre>
 <pre class="r"><code>start_time &lt;- Sys.time()</code></pre>
 </div>
 <div id="analysis-steps" class="section level1">
@@ -1793,7 +1793,6 @@ sound_change_plot_animation &lt;- animate(sound_change_plot_animation, nframes =
 anim_save(sound_change_plot_animation, filename = &quot;Figures/sound_change_animation.gif&quot;)
 
 sound_change_plot_animation</code></pre>
-<p><img src="Covariation_monophthongs_analysis_files/figure-html/unnamed-chunk-38-1.gif" /><!-- --></p>
 </div>
 </div>
 </div>
@@ -2962,7 +2961,6 @@ animate(PC1_plot_animation, nframes = 200, fps = 5, rewind = FALSE, start_pause 
 # anim_save(&quot;Figures/PC1_animation.gif&quot;)
 
 PC1_plot_animation</code></pre>
-<p><img src="Covariation_monophthongs_analysis_files/figure-html/unnamed-chunk-62-1.gif" /><!-- --></p>
 </div>
 </div>
 <div id="pc2" class="section level2">
@@ -3133,9 +3131,9 @@ PC2_change_plot</code></pre>
   # shadow_trail(max_frames = 100, alpha = 0.1) +
   ease_aes(&#39;linear&#39;)
 
-animate(PC2_plot_animation, nframes = 200, fps = 5, rewind = FALSE, start_pause = 10, end_pause = 10, duration = 20)</code></pre>
-<p><img src="Covariation_monophthongs_analysis_files/figure-html/unnamed-chunk-68-1.gif" /><!-- --></p>
-<pre class="r"><code># anim_save(&quot;Figures/PC2_animation.gif&quot;)</code></pre>
+animate(PC2_plot_animation, nframes = 200, fps = 5, rewind = FALSE, start_pause = 10, end_pause = 10, duration = 20)
+
+# anim_save(&quot;Figures/PC2_animation.gif&quot;)</code></pre>
 </div>
 </div>
 <div id="pc3" class="section level2">
@@ -3304,9 +3302,9 @@ PC3_change_plot</code></pre>
   # shadow_trail(max_frames = 100, alpha = 0.1) +
   ease_aes(&#39;linear&#39;)
 
-animate(PC3_plot_animation, nframes = 200, fps = 5, rewind = FALSE, start_pause = 10, end_pause = 10, duration = 20)</code></pre>
-<p><img src="Covariation_monophthongs_analysis_files/figure-html/unnamed-chunk-74-1.gif" /><!-- --></p>
-<pre class="r"><code># anim_save(&quot;Figures/PC3_animation.gif&quot;)</code></pre>
+animate(PC3_plot_animation, nframes = 200, fps = 5, rewind = FALSE, start_pause = 10, end_pause = 10, duration = 20)
+
+# anim_save(&quot;Figures/PC3_animation.gif&quot;)</code></pre>
 </div>
 </div>
 <div id="comparison-with-sound-change" class="section level2">
@@ -4600,14 +4598,14 @@ ggsave(plot = mod_pred_PC3_values_vowel_plot, filename = &quot;Covariation_shiny
 anim_save(sound_change_plot_animation, filename = &quot;Covariation_shiny/www/sound_change_animation.gif&quot;)</code></pre>
 <pre class="r"><code>cat(paste0(&quot;End time:\n&quot;, format(Sys.time(), &quot;%d %B %Y, %r&quot;)))</code></pre>
 <pre><code>## End time:
-## 13 July 2021, 04:55:59 pm</code></pre>
+## 13 July 2021, 05:31:04 pm</code></pre>
 <pre class="r"><code>end_time &lt;- Sys.time()
 
 cat(paste0(&quot;\n---------------\nTotal time to compile:\n&quot;, as.numeric(end_time - start_time), &quot; minutes\n---------------\n&quot;))</code></pre>
 <pre><code>## 
 ## ---------------
 ## Total time to compile:
-## 22.7661460638046 minutes
+## 7.88380806446075 minutes
 ## ---------------</code></pre>
 </div>
 
