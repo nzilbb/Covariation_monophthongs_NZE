@@ -1,7 +1,7 @@
 ---
 title: "Systematic co-variation of monophthongs across speakers of New Zealand English"
 subtitle: "Supplementary materials: _Analysis script_"
-author: "James Brand<sup>1</sup>, Jen Hay<sup>1,2</sup>, Lynn Clark<sup>1,2</sup>, Kevin Watson<sup>1,2</sup> & Márton Sóskuthy<sup>3</sup><br><br/> <sup>1</sup>New Zealand Institute for Language, Brain and Behaviour, Univeristy of Canterbury, NZ<br> <sup>2</sup>Department of Linguistics, Univeristy of Canterbury, NZ<br><sup>3</sup>Department of Linguistics, The University of British Columbia, CA<br/><br/>Corresponding author: James Brand<br/>Email: james.brand@canterbury.ac.nz<br/>Website: https://jamesbrandscience.github.io"
+author: "James Brand<sup>1</sup>, Jen Hay<sup>1,2</sup>, Lynn Clark<sup>1,2</sup>, Kevin Watson<sup>1,2</sup> & Márton Sóskuthy<sup>3</sup><br><br/> <sup>1</sup>New Zealand Institute for Language, Brain and Behaviour, Univeristy of Canterbury, NZ<br> <sup>2</sup>Department of Linguistics, Univeristy of Canterbury, NZ<br><sup>3</sup>Department of Linguistics, The University of British Columbia, CA<br/><br/>Corresponding author: James Brand<br/>Email: james.brand.ac@gmail.com<br/>Website: https://jamesbrandscience.github.io"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:
@@ -120,7 +120,7 @@ Let's inspect the variables...
 
 We should have **`r length(names(vowels_all))`** variables.
 
-Definitions of each variable are given below (factors are represented as *fct* with the number of unique levels also provided e.g. *fct, 2* represents a factor with 2 unique values, numeric variables are represented as *num*, with the smallest and largest values provided, e.g. *num, (1857-1988)*):
+Definitions of each variable are given below (factors are represented as *fct* with the number of unique levels also provided e.g. *fct (481)* represents a factor with 2 unique values, numeric variables are represented as *num*, with the smallest and largest values provided, e.g. *num (1864-1982)*):
 
 ```{r echo=FALSE}
 data.frame(
@@ -200,7 +200,7 @@ The ONZE dataset comprises four different sub-corpora:
 
 MU - Mobile Unit<br>
 IA - Intermediate Archive<br>
-Darfield - Canterbury Regional Survey<br>
+CRS/Darfield - Canterbury Regional Survey<br>
 CC - Canterbury Corpus<br>
 
 Below is a summary of the demographic information for each of the sub-corpora.
@@ -210,7 +210,7 @@ Below is a summary of the demographic information for each of the sub-corpora.
 demographics1 <- vowels_all %>%
   group_by(Corpus) %>% #group by sub-corpus
   summarise(`N Tokens` = n(), #n tokens
-            `%` = `N Tokens`/nrow(vowels_all)*100, #n tokens as a percent
+            `% Tokens` = `N Tokens`/nrow(vowels_all)*100, #n tokens as a percent
             `N Speakers` = n_distinct(Speaker), #n speakers
             `Year of Birth Range` = paste(min(participant_year_of_birth), #min year of birth
               "-", #divide the 2 values
@@ -221,7 +221,7 @@ demographics1 <- vowels_all %>%
 demographics2 <- vowels_all %>%
   group_by(Corpus, Gender) %>% #group by sub-scorpus and gender
   summarise(n = n_distinct(Speaker)) %>% #get n speakers
-  mutate(Gender = fct_recode(Gender, "Female" = "F", "Male" = "M")) %>% ##rename the gender levels to be clearer
+  mutate(Gender = fct_recode(Gender, "Female" = "F", "Male" = "M")) %>% #rename the gender levels to be clearer
   arrange(factor(Corpus, levels = c("MU", "IA", "Darfield", "CC"))) %>% #order the rows by sub-corpus birth range %>%
   spread(Gender, n) #convert long format data to wide
 
@@ -231,7 +231,7 @@ demographics <- inner_join(demographics1[,1:4], demographics2, by = "Corpus") %>
 
 #output the data as a table
 demographics %>%
-  kable(digits = 1, align = c("l", "c", "c", "c", "c", "c", "c")) %>% #make table and round decimals to 1
+  kable(digits = 2, align = c("l", "c", "c", "c", "c", "c", "c")) %>% #make table and round decimals to 1
   kable_styling(full_width = FALSE) #add styling
 
 #remove the unneeded demographics data frames
@@ -244,21 +244,42 @@ rm(demographics, demographics1, demographics2)
 The distribution of speakers by gender is given in the histogram below.
 
 ```{r}
-#histogram of the speakers by year of birth and gender
-vowels_all %>%
+demographics_speakers <- vowels_all %>%
+  mutate(Gender = ifelse(Gender == "F", "Female", "Male")) %>%
   select(Speaker, Gender, participant_year_of_birth) %>%
   distinct() %>%
+  group_by(Gender) %>%
+  summarise(n = n())
+
+#histogram of the speakers by year of birth and gender
+demographic_speakers_plot <- vowels_all %>%
+  select(Speaker, Gender, participant_year_of_birth) %>%
+  distinct() %>%
+  mutate(Gender = ifelse(Gender == "F", "Female", "Male")) %>%
   ggplot(aes(x = participant_year_of_birth, fill = Gender, colour = Gender)) +
-  geom_histogram(aes(position="identity"),
-                 binwidth=1,
+  geom_histogram(binwidth=1,
                  alpha = 0.8, colour = NA) +
   geom_rug(alpha = 0.2) +
-  scale_x_continuous(breaks = seq(1860, 1990, 15)) +
-  scale_fill_manual(values = c("black", "#7CAE00")) +
-  scale_color_manual(values = c("black", "#7CAE00")) +
-  geom_label(data = vowels_all %>% filter(participant_year_of_birth > 1863 & participant_year_of_birth < 1983) %>% select(Speaker, Gender, participant_year_of_birth) %>% distinct() %>% group_by(Gender) %>% summarise(n = n()), aes(x = 1864, y = 20, label = paste0("N female = ", n[1], "\nN male = ", n[2], "\nN total = ", sum(n), "\nyob range: ", min(vowels_all$participant_year_of_birth), " - ", max(vowels_all$participant_year_of_birth))), hjust=0, inherit.aes = FALSE) +
+  annotate("rect", xmin = 1860, xmax = 1895, ymin = 12, ymax = 23, fill = "white", colour = "black") +
+  scale_x_continuous(breaks = seq(1860, 1990, 15), name = "Speaker year of birth") +
+  scale_y_continuous(name = "Count") +
+  scale_fill_manual(values = c("black", "#7CAE00"), name = "Gender", guide = guide_legend(title.position = "top")) +
+  scale_color_manual(values = c("black", "#7CAE00"), name = "Gender", guide = guide_legend(title.position = "top")) +
+  annotate("text", x = 1860.5, y = 17.8, hjust = 0, label = "atop(bold(Demographics))", parse = TRUE) +
+  annotate("text", x = 1860.5, y = 15, hjust = 0, label = paste0("N female = ", demographics_speakers$n[1], "\nN male = ", demographics_speakers$n[2], "\nN total = ", sum(demographics_speakers$n), "\nyob range = ", min(vowels_all$participant_year_of_birth), ":", max(vowels_all$participant_year_of_birth))) +
+  # geom_text(data = vowels_all %>% filter(participant_year_of_birth > 1863 & participant_year_of_birth < 1983) %>% select(Speaker, Gender, participant_year_of_birth) %>% distinct() %>% group_by(Gender) %>% summarise(n = n()), aes(x = 1862, y = 17, label = paste0("N female = ", n[1], "\nN male = ", n[2], "\nN total = ", sum(n), "\nyob range: ", min(vowels_all$participant_year_of_birth), " - ", max(vowels_all$participant_year_of_birth))), hjust=0, inherit.aes = FALSE) +
   theme_bw() +
-  theme(legend.position = "top")
+  theme(legend.position = c(0.052, 0.95),
+        legend.direction = "horizontal",
+        legend.title = element_text(face = "bold"),
+        legend.justification = c(0.052, 0.95),
+        legend.background = element_rect(fill=alpha('white', 0)),
+        axis.text = element_text(size = 14),
+        axis.title = element_text(size = 14))
+
+demographic_speakers_plot
+
+ggsave(plot = demographic_speakers_plot, filename = "Figures/demographics_speakers_plot.png", width = 7, height = 4.5, dpi = 400)
 
 ```
 
@@ -378,11 +399,42 @@ vowels_all <- vowels_all %>%
 rm(summary_vowels_all_lobanov, summary_vowels_all, summary_mean_of_means)
 
 #inspect the relationship between the two normalised values
-vowels_all %>%
-  ggplot(aes(x = F1_lobanov_2.0, y = F1_lobanov, colour = Speaker)) +
+F1 <- vowels_all %>%
+  ggplot(aes(x = F1_lobanov_2.0, y = F1_lobanov, group = Speaker, colour = Speaker)) +
   geom_smooth(method = "lm", size = 0.1, show.legend = FALSE) +
   geom_abline(slope=1, intercept=0) +
   theme_bw()
+
+vowels_all %>%
+  group_by(Speaker) %>%
+  do(mod = lm(F1_lobanov ~ F1_lobanov_2.0, data = .)) %>%
+  mutate(Slope = summary(mod)$coeff[2]) %>%
+  select(-mod) %>%
+#   summarise(cor = cor(F1_lobanov_2.0, F1_lobanov)) %>%
+#   as.data.frame() %>%
+  # ungroup() %>%
+  # pivot_wider(names_from = Vowel, values_from = cor) %>%
+  View()
+
+vowels_all %>%
+  filter(Speaker %in% c("MU_f_593", "CC_m_103")) %>%
+  rowid_to_column() %>%
+  pivot_longer(c(F1_50:F2_50, F1_lobanov:F2_lobanov_2.0)) %>%
+  mutate(variable = str_sub(name, 1, 2)) %>%
+  mutate(version = ifelse(str_detect(name, "50"), "Hz",
+                          ifelse(str_detect(name, "2.0"), "Lobanov 2.0", "Lobanov"))) %>%
+  select(-name) %>%
+  pivot_wider(names_from = variable, values_from = value) %>%
+  # filter(version != "Hz") %>%
+  filter(version == "Hz") %>%
+  ggplot(aes(x = F2, y = F1, colour = Vowel, linetype = Speaker, shape = Speaker)) +
+  # geom_point(size = 0.5, alpha = 0.2) +
+  stat_ellipse(level = 0.67) +
+  scale_x_reverse(position = "top") +
+  scale_y_reverse(position = "right") +
+  facet_wrap(~version) +
+  theme_bw() +
+  theme(legend.position = "none")
 
 vowels_all %>%
   ggplot(aes(x = F2_lobanov_2.0, y = F2_lobanov, colour = Speaker)) +

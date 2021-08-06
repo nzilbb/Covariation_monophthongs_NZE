@@ -1,7 +1,7 @@
 ---
 title: "Systematic co-variation of monophthongs across speakers of New Zealand English"
 subtitle: "Supplementary materials: _Data processing_"
-author: "James Brand, Jen Hay, Lynn Clark, Kevin Watson & Márton Sóskuthy<br/><br/>Corresponding author: James Brand<br/>Email: james.brand@canterbury.ac.nz<br/>Website: https://jamesbrandscience.github.io"
+author: "James Brand, Jen Hay, Lynn Clark, Kevin Watson & Márton Sóskuthy<br/><br/>Corresponding author: James Brand<br/>Email: james.brand.ac@gmail.com<br/>Website: https://jamesbrandscience.github.io"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:

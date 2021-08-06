@@ -4,7 +4,7 @@
 
 Please cite the original article as:
 
-Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systematic co-variation of monophthongs across speakers of New Zealand English.
+Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (in press). Systematic co-variation of monophthongs across speakers of New Zealand English. _Journal of Phonetics_.
 
 **Pre-print**
 
@@ -14,7 +14,9 @@ The pre-print of the article can be found at: https://nzilbb.github.io/Covariati
 
 The project pages, with data and analysis scripts can be found at:
 
-https://nzilbb.github.io/Covariation_monophthongs_NZE/
+GitHub: https://github.com/nzilbb/Covariation_monophthongs_NZE
+
+OSF: https://osf.io/q4j29/
 
 **Run app locally**
 

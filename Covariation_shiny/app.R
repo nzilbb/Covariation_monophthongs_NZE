@@ -46,8 +46,7 @@ ui <- navbarPage(
     a(img(src="NZILBB2.png", width=300, height=42), href="https://www.canterbury.ac.nz/nzilbb/", target="_blank"),
     
     #reuse declaration
-    h5("You can distribute, remix, tweak, and build upon this work as long as you credit us for the original creation. Please use the following citation:\nBrand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systematic co-variation of monophthongs across speakers of New Zealand English.
-")
+    h5(HTML("You can distribute, remix, tweak, and build upon this work as long as you credit us for the original creation. Please use the following citation:</br></br><b>Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (in press). Systematic co-variation of monophthongs across speakers of New Zealand English. <i>Journal of Phonetics</i></b>"))
       )
     ),
   

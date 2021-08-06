@@ -4,7 +4,7 @@
 
 ## Systematic co-variation of monophthongs across speakers of New Zealand English (repository)
 
-Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (submitted). Systematic co-variation of monophthongs across speakers of New Zealand English.
+Brand, J., Hay, J., Clark, L., Watson, K., & Sóskuthy, M. (in press). Systematic co-variation of monophthongs across speakers of New Zealand English. _Journal of Phonetics_.
 
 [![GitHub](https://img.shields.io/badge/GitHub-repo-blue?labelColor=lightgrey&logo=github)](https://github.com/nzilbb/Covariation_monophthongs_NZE)
 [![OSF](https://tinyurl.com/osfshield1)](https://osf.io/q4j29/)
