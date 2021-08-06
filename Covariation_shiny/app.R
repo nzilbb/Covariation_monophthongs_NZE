@@ -15,7 +15,9 @@ sound_change_plot_data <- readRDS("mod_pred_data.rds")
 mod_pred_PC_plot_data <- readRDS("mod_pred_PC_values_data.rds") %>%
   mutate(Comp.1 = round(-Comp.1, 3),
          Comp.2 = round(-Comp.2, 3),
-         Comp.3 = round(-Comp.3, 3))
+         Comp.3 = round(-Comp.3, 3)) %>%
+  rename(Vowel = 2) %>%
+  select(-6, -10)
 
 ###################
 #ui

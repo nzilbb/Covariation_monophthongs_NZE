@@ -5,9 +5,9 @@ account: onze
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2718458
-bundleId: 4815252
+bundleId: 4894491
 url: https://onze.shinyapps.io/Covariation_shiny/
-when: 1626185893.95458
-lastSyncTime: 1626185893.95459
+when: 1628246476.25427
+lastSyncTime: 1628246476.25431
 asMultiple: FALSE
 asStatic: FALSE
